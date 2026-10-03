@@ -58,6 +58,51 @@ Missing AFTER passes are skipped with a warning; the BEFORE CSV is required.
 Tile colours compare the *displayed* values (equal -> neutral). The uplift table colours the *rounded*
 change shown in the cell.
 
+## Converting CapFrameX captures to PresentMon 2 CSVs
+
+The FrameCap folder's `tiny1/2/3CapFrameX-cs2.exe-*.json` files are CapFrameX captures. Convert them into
+PresentMon 2 CSVs in the same layout as `benchmark_after.csv`:
+
+```sh
+python -m presetmon2 convert tiny1CapFrameX-*.json tiny2CapFrameX-*.json tiny3CapFrameX-*.json \
+    --as after,after_second,after_third --out-dir converted
+# -> converted/benchmark_after.csv, benchmark_after2.csv, benchmark_after3.csv
+```
+
+`--as` names the runs after the preset's passes; without it each CSV is named after its input file. A merged
+CapFrameX file (several `Runs`, e.g. the 18 MB `tinyosszes...json`) writes one CSV per run.
+
+Then build the report. These three captures are all AFTER runs (their comments are "Tiny boost 1 run", "2", "3"), so
+add the BEFORE capture from the folder:
+
+```sh
+python -m presetmon2 report --dir converted --pass before=path/to/benchmark_before.csv
+```
+
+| CapFrameX field | PresentMon 2 column |
+| --- | --- |
+| `MsBetweenPresents` (lossless) | `MsBetweenPresents` |
+| `MsBetweenDisplayChange`, `MsInPresentAPI`, `MsUntilDisplayed`, `SyncInterval` | same names |
+| `AnimationError` | `MsAnimationError` |
+| `GpuActive` / `CpuActive` | `MsGPUBusy` / `MsCPUBusy` (assumed equivalent) |
+| `PcLatency` | `MsPCLatency` (extra column; the report's "PC Latency" tile still uses `MsUntilDisplayed`, as in the example) |
+| `PresentMode` (number) | text such as `Hardware: Independent Flip` |
+| `TimeInSeconds` | `CapFrameXTimeInMs` (extra); `TimeInMs` is rebuilt as the running sum of `MsBetweenPresents`, which is what PresentMon writes |
+| not recorded by CapFrameX | `MsGPULatency`, `MsGPUWait`, `MsGPUTime`, ... written as `NA` |
+
+Consequences to know about:
+
+* The report shows **n/a for GPU Latency and GPU Wait** on converted captures - CapFrameX never stored them.
+* Converted runs are ~111 s (the benchmark passes are 104 s) and were captured in a separate session, so treat
+  comparisons with `benchmark_before.csv` as indicative only.
+* Animation Error is not comparable across the two tools: the converted runs average ~0.29 ms (mean absolute value)
+  against ~0.08 ms in the example benchmark.
+* Fields that are entirely zero in the source (older CapFrameX builds) are written as `NA` rather than a fake 0.00, and
+  `convert` prints a note for each. Edit `capframex` in `preset.json` to change the mapping.
+
+Converted frametime statistics of the three files: 488.6 / 490.2 / 487.7 FPS average (the same values CapFrameX
+computes from the stored frametimes).
+
 ## Verified against the example files
 
 Run with the example `benchmark_previous.json` (which stores all four passes' frametimes and the
@@ -99,8 +144,10 @@ python -m unittest discover -s tests -t .
    frame per time bucket (spikes stay visible) plus a smoothed average. Stats and axes match; the line shape differs slightly.
 5. **Input detection.** A pass is flagged ("Keyboard/mouse input detected") when the input-latency columns contain
    values. This is my addition based on the example JSON's `input_detected` field.
-6. The CapFrameX captures in the folder (`tiny*CapFrameX-cs2.exe-*.json`) are a separate manual run (~111 s, 489 FPS
-   avg) and were used only to cross-check the statistic definitions (1% low = mean of worst frames, etc.).
+6. The converter (`capframex.py`) was run on `tiny1/2/3` and checked by reading the output back through the PresentMon
+   reader (frametimes identical). The merged `tinyosszes...json` (18 MB) is over the Drive connector's 10 MB download
+   limit, so multi-run output is only covered by unit tests. `GpuActive`/`CpuActive` -> `MsGPUBusy`/`MsCPUBusy` and the
+   `PresentMode` names are assumptions from the CapFrameX/PresentMon naming, not checked against a CapFrameX source.
 
 ## Layout
 
@@ -108,7 +155,8 @@ python -m unittest discover -s tests -t .
 presetmon2/
   preset.json         the pre-configuration
   run_benchmark.ps1   Windows runner (PresentMon 2 capture + report)
-  cli.py              python -m presetmon2 {report,metrics,verify}
+  cli.py              python -m presetmon2 {report,convert,metrics,verify}
+  capframex.py        CapFrameX JSON -> PresentMon 2 CSV converter
   metrics.py          CSV parsing + statistics
   compare.py          tile / uplift presentation rules
   report.py           HTML report

@@ -58,6 +58,42 @@
     }
   },
 
+  "capframex": {
+    "_note": "CapFrameX -> PresentMon 2 CSV. Output columns not listed under 'fields' (and the fixed Application/PresentMode/TimeInMs ones) are written as NA. MsCPUBusy/MsGPUBusy come from CapFrameX CpuActive/GpuActive - an assumption, check against your data. MsPCLatency is CapFrameX's own PC-latency value; the report's 'PC Latency' tile still uses MsUntilDisplayed, as in the example.",
+    "header": [
+      "Application", "SyncInterval", "PresentMode", "TimeInMs", "MsBetweenSimulationStart",
+      "MsBetweenPresents", "MsBetweenDisplayChange", "MsInPresentAPI", "MsRenderPresentLatency",
+      "MsUntilDisplayed", "CPUStartTimeInMs", "MsBetweenAppStart", "MsCPUBusy", "MsCPUWait",
+      "MsGPULatency", "MsGPUTime", "MsGPUBusy", "MsGPUWait", "MsAnimationError", "AnimationTime",
+      "MsFlipDelay", "MsAllInputToPhotonLatency", "MsClickToPhotonLatency",
+      "MsPCLatency", "CapFrameXTimeInMs"
+    ],
+    "fields": {
+      "SyncInterval": "SyncInterval",
+      "MsBetweenPresents": "MsBetweenPresents",
+      "MsBetweenDisplayChange": "MsBetweenDisplayChange",
+      "MsInPresentAPI": "MsInPresentAPI",
+      "MsUntilDisplayed": "MsUntilDisplayed",
+      "MsCPUBusy": "CpuActive",
+      "MsGPUBusy": "GpuActive",
+      "MsAnimationError": "AnimationError",
+      "MsPCLatency": "PcLatency"
+    },
+    "na_if_all_zero": ["MsBetweenDisplayChange", "MsUntilDisplayed", "MsCPUBusy", "MsGPUBusy", "MsAnimationError", "MsPCLatency"],
+    "na_when_dropped": ["MsBetweenDisplayChange", "MsUntilDisplayed", "MsAnimationError", "MsPCLatency"],
+    "present_modes": {
+      "0": "Unknown",
+      "1": "Hardware: Legacy Flip",
+      "2": "Hardware: Legacy Copy to front buffer",
+      "3": "Hardware: Independent Flip",
+      "4": "Composed: Flip",
+      "5": "Composed: Copy with GPU GDI",
+      "6": "Composed: Copy with CPU GDI",
+      "7": "Composed: Composition Atlas",
+      "8": "Hardware Composed: Independent Flip"
+    }
+  },
+
   "report": {
     "page_title": "TinyBoost Benchmark Report",
     "heading": "Benchmark Results",

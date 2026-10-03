@@ -7,7 +7,7 @@ import sys
 import uuid
 from pathlib import Path
 
-from . import compare, metrics, report
+from . import capframex, compare, metrics, report
 from .preset import load_preset, output_dir, pass_specs
 
 
@@ -27,13 +27,17 @@ def _benchmark_id(preset, directory, override):
     return _new_benchmark_id(preset)
 
 
-def _load_passes(preset, directory):
-    """Read every pass CSV that exists; BEFORE must be present."""
+def _load_passes(preset, directory, overrides=None):
+    """Read every pass CSV that exists; BEFORE must be present.
+
+    `overrides` maps a pass key to an explicit CSV path (instead of <directory>/<csv name>).
+    """
     specs = pass_specs(preset)
     csv_cfg, mcfg = preset["csv"], preset["metrics"]
     captures = {}
     for spec in specs:
-        path = Path(directory) / spec["csv"]
+        path = Path(overrides[spec["key"]]) if spec["key"] in (overrides or {}) \
+            else Path(directory) / spec["csv"]
         if path.is_file():
             captures[spec["key"]] = (spec, path, metrics.read_capture(path, csv_cfg))
         else:
@@ -71,10 +75,21 @@ def _write_json(path, preset, benchmark_id, passes, include_frametimes):
     Path(path).write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8")
 
 
+def _parse_overrides(preset, items):
+    valid = {spec["key"] for spec in pass_specs(preset)}
+    overrides = {}
+    for item in items or []:
+        key, sep, path = item.partition("=")
+        if not sep or key not in valid or not path:
+            raise ValueError(f"--pass expects KEY=PATH with KEY one of {sorted(valid)}, got {item!r}")
+        overrides[key] = path
+    return overrides
+
+
 def cmd_report(args):
     preset = load_preset(args.preset)
     directory = Path(args.dir) if args.dir else output_dir(preset)
-    passes = _load_passes(preset, directory)
+    passes = _load_passes(preset, directory, _parse_overrides(preset, args.pass_overrides))
     benchmark_id = _benchmark_id(preset, directory, args.id)
     view = compare.build_view(preset, passes)
     csv_paths = [(p["capture_label"], p["csv_path"]) for p in passes]
@@ -85,6 +100,45 @@ def cmd_report(args):
     json_out = Path(args.json) if args.json else directory / "benchmark_results.json"
     _write_json(json_out, preset, benchmark_id, passes, args.include_frametimes)
     print(f"report: {out}\nresults: {json_out}\nbenchmark id: {benchmark_id}")
+
+
+def cmd_convert(args):
+    """CapFrameX JSON -> PresentMon 2 CSV."""
+    preset = load_preset(args.preset)
+    cfg = preset["capframex"]
+    specs = {spec["key"]: spec for spec in pass_specs(preset)}
+    keys = [k for k in (args.pass_keys or "").split(",") if k]
+    unknown = [k for k in keys if k not in specs]
+    if unknown:
+        raise ValueError(f"--as: unknown pass key(s) {unknown}; valid keys: {sorted(specs)}")
+
+    index = 0
+    for source in args.input:
+        info, runs = capframex.load_runs(source)
+        out_dir = Path(args.out_dir) if args.out_dir else Path(source).parent
+        out_dir.mkdir(parents=True, exist_ok=True)
+        print(f"{source}: {capframex.describe(info)} - {len(runs)} run(s)")
+        for number, capture in enumerate(runs, 1):
+            if keys:
+                if index >= len(keys):
+                    raise ValueError(f"--as lists {len(keys)} pass key(s) but the inputs hold more runs")
+                name = specs[keys[index]]["csv"]
+            else:
+                name = Path(source).stem + (f"_run{number}" if len(runs) > 1 else "") + ".csv"
+            index += 1
+            header, rows, notes = capframex.convert_run(info, capture, cfg)
+            target = out_dir / name
+            capframex.write_csv(target, header, rows)
+
+            frametimes = capture["MsBetweenPresents"]
+            seconds = sum(frametimes) / 1000.0
+            print(f"  -> {target}: {len(rows)} frames, {seconds:.1f} s, "
+                  f"{len(frametimes) / seconds:.1f} FPS avg")
+            for note in notes:
+                print(f"     note: {note}")
+    if keys and index < len(keys):
+        print(f"warning: --as listed {len(keys)} pass key(s) but only {index} run(s) were converted",
+              file=sys.stderr)
 
 
 def cmd_metrics(args):
@@ -186,9 +240,20 @@ def main(argv=None):
     p.add_argument("--out", help="HTML output path (default: <dir>/benchmark_report.html)")
     p.add_argument("--json", help="results JSON path (default: <dir>/benchmark_results.json)")
     p.add_argument("--id", help="benchmark id (default: <dir>/benchmark_id.txt, else generated)")
+    p.add_argument("--pass", dest="pass_overrides", action="append", metavar="KEY=PATH",
+                   help="use this CSV for a pass instead of <dir>/<its preset file name> "
+                        "(repeatable), e.g. --pass after=tiny1.csv")
     p.add_argument("--include-frametimes", action="store_true",
                    help="embed the per-frame frametimes in the results JSON")
     p.set_defaults(func=cmd_report)
+
+    p = sub.add_parser("convert", help="convert CapFrameX capture JSON files to PresentMon 2 CSVs")
+    p.add_argument("input", nargs="+", help="CapFrameX .json file(s); merged files give one CSV per run")
+    p.add_argument("--out-dir", help="output folder (default: next to each input file)")
+    p.add_argument("--as", dest="pass_keys", metavar="KEY[,KEY...]",
+                   help="name the runs, in order, after these preset pass keys "
+                        "(e.g. after,after_second,after_third -> benchmark_after.csv, ...)")
+    p.set_defaults(func=cmd_convert)
 
     p = sub.add_parser("metrics", help="print the statistics of one or more CSVs as JSON")
     p.add_argument("csv", nargs="+")
