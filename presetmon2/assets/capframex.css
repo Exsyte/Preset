@@ -1,0 +1,21 @@
+/* additions for the CapFrameX export (loaded after report.css) */
+.tiles.t4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.tile .tl{overflow-wrap:anywhere}
+@media(min-width:981px){html,body{overflow:auto!important;height:auto!important}.wrap{transform:none!important}}
+.panels{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:16px;margin-top:16px;align-items:start}
+@media(max-width:980px){.panels{grid-template-columns:1fr}}
+.panel{min-width:0;border:1px solid rgba(185,202,220,.18);border-radius:3px;background:linear-gradient(100deg,rgba(20,31,42,.73),rgba(10,17,24,.72));padding:16px 18px}
+.panel h2{color:#fff;font-size:18px;margin:0 0 10px}
+.kv{display:grid;grid-template-columns:auto minmax(0,1fr);gap:7px 16px;font-family:'Segoe UI',system-ui,sans-serif;font-size:13px}
+.kv dt{color:#93a7ba;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding-top:2px}
+.kv dd{color:#e8eef5;font-weight:600;overflow-wrap:anywhere}
+.sensors td.rl{font-family:'Segoe UI',system-ui,sans-serif;font-size:13px;white-space:normal}
+.sensors td{font-size:15px}
+.sensors small{display:block;color:#8f9aa7;font-size:10px;font-weight:600;margin-top:2px}
+.sensors th:first-child{width:34%}
+.cmp td{color:#dce5ed}
+.cmp tr.spread td{color:#9aa6b5}
+.cmp tbody td:not(.rl){font-size:15px}
+.cmp td.rl{white-space:nowrap}
+.note-line{color:#9aa6b5;font-family:'Segoe UI',system-ui,sans-serif;font-size:11px;margin-top:8px}
+.capture-meta{color:#93a7ba;font-family:'Segoe UI',system-ui,sans-serif;font-size:11px;margin:2px 0 6px}

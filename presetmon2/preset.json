@@ -94,6 +94,94 @@
     }
   },
 
+  "capframex_report": {
+    "_note": "HTML export of CapFrameX captures in the PresentMon report layout. No baseline is assumed: runs are shown side by side, uncoloured. Stuttering uses 2.5x the mean frametime across all runs as one common threshold.",
+    "page_title": "Benchmark Report (CapFrameX)",
+    "capture_heading": "Results captured with CapFrameX {version}",
+    "capture_label": "Source captures:",
+    "note": "<b>About this report.</b> Exported from CapFrameX capture files into the PresentMon benchmark report layout. The runs are shown side by side - there is no BEFORE pass in these files, so nothing is coloured as better or worse. P1 / P0.1 / lows follow the same definitions as the benchmark report; CapFrameX's own screen may differ in the last digit. Sensor rows that CapFrameX recorded as all zero (sensor not readable) are left out.",
+    "peer_reference_note": "Share of capture time in frames longer than 2.5x the mean frametime of all runs; the same threshold is used for every run",
+    "groups": [
+      {
+        "title": "Frame rate",
+        "subtitle": "FPS \u00b7 higher is better",
+        "tiles": [
+          { "metric": "avg_fps",   "label": "AVG",          "decimals": 1, "suffix": "", "tooltip": "Average FPS over the whole run" },
+          { "metric": "p1_fps",    "label": "P1",           "decimals": 1, "suffix": "", "tooltip": "99% of frames were faster than this FPS" },
+          { "metric": "low1_fps",  "label": "1% Low Avg",   "decimals": 1, "suffix": "", "tooltip": "Average FPS of the slowest 1% of frames" },
+          { "metric": "low01_fps", "label": "0.1% Low Avg", "decimals": 1, "suffix": "", "tooltip": "Average FPS of the slowest 0.1% of frames" },
+          { "metric": "p01_fps",   "label": "P0.1",         "decimals": 1, "suffix": "", "tooltip": "99.9% of frames were faster than this FPS" }
+        ]
+      },
+      {
+        "title": "Smoothness & latency",
+        "subtitle": "lower is better",
+        "tiles": [
+          { "metric": "pc_latency_avg_ms",      "label": "PC Latency",      "decimals": 1, "suffix": " ms", "tooltip": "Average time from frame start until the frame is displayed (MsUntilDisplayed)" },
+          { "metric": "pcl_avg_ms",             "label": "PCL",             "decimals": 1, "suffix": " ms", "tooltip": "PresentMon PC latency as recorded by CapFrameX (PcLatency)" },
+          { "metric": "animation_error_avg_ms", "label": "Anim Error", "decimals": 2, "suffix": " ms", "tooltip": "Animation error: how far on-screen motion drifts from the game simulation, per frame (mean absolute value)" },
+          { "metric": "stutter_time_pct",       "label": "Stutter Time",    "decimals": 2, "suffix": "%",   "tooltip": "@stutter" }
+        ]
+      },
+      {
+        "title": "CPU & GPU time per frame",
+        "subtitle": "lower is better",
+        "tiles": [
+          { "metric": "cpu_busy_avg_ms",    "label": "CPU Busy",       "decimals": 2, "suffix": " ms", "tooltip": "Time the CPU spends actively working on a frame (CpuActive)" },
+          { "metric": "gpu_busy_avg_ms",    "label": "GPU Busy",       "decimals": 2, "suffix": " ms", "tooltip": "Time the GPU spends actively working on a frame (GpuActive)" },
+          { "metric": "in_present_avg_ms",  "label": "In Present API", "decimals": 2, "suffix": " ms", "tooltip": "Time spent inside the Present() call" }
+        ]
+      }
+    ],
+
+    "table": {
+      "title": "RUN COMPARISON",
+      "columns": [
+        { "metric": "avg_fps",                "header": "AVG FPS",          "decimals": 1, "suffix": "" },
+        { "metric": "low1_fps",               "header": "1% Low Average",   "decimals": 1, "suffix": "" },
+        { "metric": "p1_fps",                 "header": "P1 FPS",           "decimals": 1, "suffix": "" },
+        { "metric": "low01_fps",              "header": "0.1% Low Average", "decimals": 1, "suffix": "" },
+        { "metric": "p01_fps",                "header": "P0.1 FPS",         "decimals": 1, "suffix": "" },
+        { "metric": "animation_error_avg_ms", "header": "Anim Error",       "decimals": 2, "suffix": " ms" },
+        { "metric": "stutter_time_pct",       "header": "Stuttering",       "decimals": 2, "suffix": "%" },
+        { "metric": "pc_latency_avg_ms",      "header": "PC Latency",       "decimals": 2, "suffix": " ms" },
+        { "metric": "pcl_avg_ms",             "header": "PCL",              "decimals": 2, "suffix": " ms" },
+        { "metric": "cpu_busy_avg_ms",        "header": "CPU Busy",         "decimals": 2, "suffix": " ms" },
+        { "metric": "gpu_busy_avg_ms",        "header": "GPU Busy",         "decimals": 2, "suffix": " ms" }
+      ]
+    },
+
+    "system": [
+      { "label": "Game",         "fields": ["GameName", "ProcessName"] },
+      { "label": "CPU",          "fields": ["Processor"] },
+      { "label": "GPU",          "fields": ["GPU"] },
+      { "label": "GPU driver",   "fields": ["GPUDriverVersion"] },
+      { "label": "Memory",       "fields": ["SystemRam"] },
+      { "label": "Motherboard",  "fields": ["Motherboard"] },
+      { "label": "OS",           "fields": ["OS"] },
+      { "label": "Resizable BAR","fields": ["ResizableBar"] },
+      { "label": "HAGS",         "fields": ["HAGS"] },
+      { "label": "Game Mode",    "fields": ["WinGameMode"] },
+      { "label": "Presentation", "fields": ["PresentationMode"] },
+      { "label": "Capture tool", "fields": ["AppVersion"], "prefix": "CapFrameX " }
+    ],
+
+    "sensors": [
+      { "type": "Load",        "name": "CPU Total",           "label": "CPU load (total)",          "unit": "%",   "decimals": 1 },
+      { "type": "Load",        "name": "CPU Max",             "label": "CPU load (busiest thread)", "unit": "%",   "decimals": 1 },
+      { "type": "Temperature", "name": "CPU Package (Tctl/Tdie)", "label": "CPU temperature",       "unit": "\u00b0C", "decimals": 1 },
+      { "type": "Power",       "name": "CPU Package",         "label": "CPU power",                 "unit": "W",   "decimals": 1 },
+      { "type": "Clock",       "name": "CPU Max",             "label": "CPU clock (max core)",      "unit": "MHz", "decimals": 0 },
+      { "type": "Load",        "name": "GPU Core",            "label": "GPU load",                  "unit": "%",   "decimals": 1 },
+      { "type": "Temperature", "name": "GPU Core",            "label": "GPU temperature",           "unit": "\u00b0C", "decimals": 1 },
+      { "type": "Clock",       "name": "GPU Core",            "label": "GPU core clock",            "unit": "MHz", "decimals": 0 },
+      { "type": "Power",       "name": "GPU Power",           "label": "GPU power",                 "unit": "W",   "decimals": 1 },
+      { "type": "Data",        "name": "GPU Memory Allocated","label": "GPU memory allocated",      "unit": "GB",  "decimals": 2 },
+      { "type": "Data",        "name": "GPU Memory Dedicated","label": "GPU memory dedicated",      "unit": "GB",  "decimals": 2 },
+      { "type": "Data",        "name": "RAM Game Used",       "label": "RAM used by game",          "unit": "GB",  "decimals": 2 }
+    ]
+  },
+
   "report": {
     "page_title": "TinyBoost Benchmark Report",
     "heading": "Benchmark Results",

@@ -22,6 +22,7 @@ class Capture:
     time_ms: list = None
     series: dict = field(default_factory=dict)
     input_detected: bool = False
+    extra: dict = field(default_factory=dict)  # other per-frame series, keyed by CSV column name
 
 
 def _number(text, na_values):

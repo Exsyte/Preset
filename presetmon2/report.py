@@ -93,18 +93,33 @@ def _asset(preset, value):
     return path if path.is_absolute() else Path(preset["_path"]).parent / path
 
 
-def render_html(preset, view, benchmark_id, csv_paths):
+def page_assets(preset, extra_css=""):
+    """(css, js, logo_html) for a report page: bundled CSS/JS plus the preset's font and logo."""
     rcfg = preset["report"]
     css = (ASSETS / "report.css").read_text(encoding="utf-8")
+    if extra_css:
+        css += "\n" + (ASSETS / extra_css).read_text(encoding="utf-8")
     if rcfg.get("font_file"):
         css = ("@font-face{font-family:Antonio;src:url(" + _embed(_asset(preset, rcfg["font_file"]), "font/ttf")
                + ") format('truetype');font-weight:100 900;font-display:swap}" + css)
     js = (ASSETS / "report.js").read_text(encoding="utf-8")
-    colors = rcfg["colors"]
     logo = ""
     if rcfg.get("logo_svg"):
         logo = (f'<img class="report-logo" alt="logo" '
                 f'src="{_embed(_asset(preset, rcfg["logo_svg"]), "image/svg+xml")}">')
+    return css, js, logo
+
+
+def csv_rows_html(csv_paths):
+    return "".join(
+        f'<div class="csv"><span class="cn">{escape(label)}</span><code>{escape(str(path))}</code>'
+        '<button class="cp" type="button">Copy</button></div>' for label, path in csv_paths)
+
+
+def render_html(preset, view, benchmark_id, csv_paths):
+    rcfg = preset["report"]
+    css, js, logo = page_assets(preset)
+    colors = rcfg["colors"]
 
     chart_cfg = preset["metrics"]["chart"]
     columns = "".join(_column_html(c, chart_cfg) for c in view["columns"])
@@ -117,10 +132,6 @@ def render_html(preset, view, benchmark_id, csv_paths):
         tr_class = ' class="avg-row"' if row["average"] else ""
         body.append(f'<tr{tr_class}><td class="rl">{escape(row["label"])}</td>{cells}</tr>')
 
-    files = "".join(
-        f'<div class="csv"><span class="cn">{escape(label)}</span><code>{escape(str(path))}</code>'
-        '<button class="cp" type="button">Copy</button></div>' for label, path in csv_paths)
-
     return (
         '<!doctype html><html lang="en"><head><meta charset="utf-8">'
         '<meta name="viewport" content="width=device-width,initial-scale=1">'
@@ -131,7 +142,7 @@ def render_html(preset, view, benchmark_id, csv_paths):
         '<div class="summary-row"><section class="uplift"><table>'
         f'<thead><tr><th></th>{head}</tr></thead><tbody>{"".join(body)}</tbody></table></section>'
         f'<footer class="foot"><div><h2>{escape(rcfg["capture_heading"])}</h2>'
-        f'<div class="capture-label">{escape(rcfg["capture_label"])}</div>{files}</div>'
+        f'<div class="capture-label">{escape(rcfg["capture_label"])}</div>{csv_rows_html(csv_paths)}</div>'
         f'<div class="note">{rcfg["note"]}</div></footer></div></div>'
         f"<script>{js}</script></body></html>\n"
     )

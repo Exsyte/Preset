@@ -7,7 +7,7 @@ import sys
 import uuid
 from pathlib import Path
 
-from . import capframex, compare, metrics, report
+from . import capframex, capframex_report, compare, metrics, report
 from .preset import load_preset, output_dir, pass_specs
 
 
@@ -141,6 +141,27 @@ def cmd_convert(args):
               file=sys.stderr)
 
 
+def cmd_capframex_report(args):
+    """CapFrameX JSON -> PresentMon-style HTML report."""
+    preset = load_preset(args.preset)
+    runs = capframex_report.collect_runs(args.input, preset, args.label)
+    html = capframex_report.render_html(preset, runs)
+
+    out = Path(args.out) if args.out else Path(args.input[0]).with_name("benchmark_report_capframex.html")
+    out.write_text(html, encoding="utf-8")
+    print(f"report: {out}")
+    if args.json:
+        Path(args.json).write_text(json.dumps(capframex_report.export_json(runs), indent=2) + "\n",
+                                   encoding="utf-8")
+        print(f"results: {args.json}")
+    for r in runs:
+        m = r["metrics"]
+        print(f"  {r['label']}: {m['frame_count']} frames, {m['duration_secs']:.1f} s, "
+              f"{m['avg_fps']:.1f} FPS avg, 1% low {m['low1_fps']:.1f}, 0.1% low {m['low01_fps']:.1f}")
+        for note in r["notes"]:
+            print(f"     note: {note}")
+
+
 def cmd_metrics(args):
     preset = load_preset(args.preset)
     for path in args.csv:
@@ -254,6 +275,15 @@ def main(argv=None):
                    help="name the runs, in order, after these preset pass keys "
                         "(e.g. after,after_second,after_third -> benchmark_after.csv, ...)")
     p.set_defaults(func=cmd_convert)
+
+    p = sub.add_parser("capframex-report",
+                       help="build a PresentMon-style HTML report straight from CapFrameX capture JSON files")
+    p.add_argument("input", nargs="+", help="CapFrameX .json file(s); every run becomes a column")
+    p.add_argument("--out", help="HTML path (default: benchmark_report_capframex.html next to the first input)")
+    p.add_argument("--json", help="also write the metrics, sensors and system info of every run as JSON")
+    p.add_argument("--label", action="append", metavar="TEXT",
+                   help="column label for each run, in order (repeat per run; default: the capture comment)")
+    p.set_defaults(func=cmd_capframex_report)
 
     p = sub.add_parser("metrics", help="print the statistics of one or more CSVs as JSON")
     p.add_argument("csv", nargs="+")

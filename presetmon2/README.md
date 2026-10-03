@@ -103,6 +103,40 @@ Consequences to know about:
 Converted frametime statistics of the three files: 488.6 / 490.2 / 487.7 FPS average (the same values CapFrameX
 computes from the stored frametimes).
 
+## HTML report straight from CapFrameX captures
+
+```sh
+python -m presetmon2 capframex-report tiny1CapFrameX-*.json tiny2CapFrameX-*.json tiny3CapFrameX-*.json \
+    --out tiny_capframex_report.html --json tiny_capframex_results.json
+```
+
+Every run in the given files becomes a column in the PresentMon report layout. A finished example built from the
+three FrameCap captures is in [`examples/`](../examples/tiny_capframex_report.html) (open it in a browser).
+
+On the page, per run: frame rate (AVG, P1, 1% / 0.1% lows, P0.1), PC latency (`MsUntilDisplayed`, as in the example),
+PCL (CapFrameX's own `PcLatency`), animation error, stutter time, CPU busy, GPU busy, time in the Present API and the
+frame-time chart with min / avg / P99 / max. Below the columns: a run-comparison table (every run, the mean and the
+spread), the system the captures were taken on, a sensor summary (CPU/GPU load, GPU temperature, clock, power, memory,
+RAM used by the game) and the capture details (file, date, frames, duration). `--json` writes the same numbers, plus
+the system info, for every run; `--label` renames the columns (default: the capture comment, e.g. "Tiny boost 1").
+
+Differences from the benchmark report, all deliberate:
+
+* **No BEFORE pass.** The three captures are AFTER runs, so they are shown side by side with no baseline, no
+  better/worse colouring and no uplift table. Stutter time uses one threshold for all runs (2.5 x the mean frametime
+  of the runs) instead of the BEFORE average.
+* **No GPU Latency / GPU Wait tiles** - CapFrameX does not record them. CPU Busy, PCL and Present-API time replace them.
+* **Sensors that CapFrameX stored as all zero** (CPU temperature, package power and clock here) are left out rather than
+  shown as 0. GPU core clock (2700 MHz) and GPU power (53.7 W) are identical in all three runs, which looks like a
+  single fixed reading rather than a measurement.
+* The machine's host name is not included in the page or the JSON.
+* P1 / P0.1 and the lows use the definitions verified against the example report; CapFrameX's own screen may differ
+  in the last digit.
+
+Verified: every frame-rate and time tile was recomputed independently (numpy, not the package code) from the raw
+CapFrameX arrays and matches; the page was loaded in headless Chromium with no script errors, the count-up animation
+settles on the right values and the Copy buttons work.
+
 ## Verified against the example files
 
 Run with the example `benchmark_previous.json` (which stores all four passes' frametimes and the
@@ -155,11 +189,13 @@ python -m unittest discover -s tests -t .
 presetmon2/
   preset.json         the pre-configuration
   run_benchmark.ps1   Windows runner (PresentMon 2 capture + report)
-  cli.py              python -m presetmon2 {report,convert,metrics,verify}
-  capframex.py        CapFrameX JSON -> PresentMon 2 CSV converter
+  cli.py              python -m presetmon2 {report,capframex-report,convert,metrics,verify}
+  capframex.py        CapFrameX JSON -> PresentMon 2 CSV converter / in-memory capture
+  capframex_report.py CapFrameX JSON -> PresentMon-style HTML report
   metrics.py          CSV parsing + statistics
   compare.py          tile / uplift presentation rules
   report.py           HTML report
   assets/             report CSS/JS (from the example), Antonio font, logo (see NOTICE.txt)
+examples/             report + results built from the three FrameCap CapFrameX captures
 tests/                unit tests + fixtures taken from the example report
 ```

@@ -12,22 +12,43 @@ from pathlib import Path
 NA = "NA"
 
 
-def load_runs(path):
-    """-> (info dict, [CaptureData dict, ...]) - one entry per run in the file.
+def load_file(path):
+    """-> (info dict, file hash, [run dict, ...]); each run has CaptureData and SensorData2.
 
-    A merged CapFrameX file (several runs) yields several captures.
+    A merged CapFrameX file (several runs) yields several runs.
     """
     data = json.loads(Path(path).read_text(encoding="utf-8-sig"))
-    runs = [r["CaptureData"] for r in data.get("Runs") or [] if r.get("CaptureData")]
+    runs = [r for r in data.get("Runs") or [] if r.get("CaptureData")]
     if not runs:
         raise ValueError(f"{path}: not a CapFrameX capture (no Runs[].CaptureData)")
-    return data.get("Info") or {}, runs
+    return data.get("Info") or {}, data.get("Hash") or "", runs
+
+
+def load_runs(path):
+    """-> (info dict, [CaptureData dict, ...]) - one entry per run in the file."""
+    info, _, runs = load_file(path)
+    return info, [r["CaptureData"] for r in runs]
 
 
 def _text(value):
     if isinstance(value, float):
         return f"{value:.4f}"
     return str(value)
+
+
+def resolve_sources(capture, cfg):
+    """CSV column -> CapFrameX values that are usable, plus notes about the ones that are not."""
+    n = len(capture["MsBetweenPresents"])
+    sources, notes = {}, []
+    for column, field in cfg["fields"].items():
+        values = capture.get(field)
+        if values is None or len(values) != n:
+            notes.append(f"{column}: CapFrameX field '{field}' missing -> NA")
+        elif column in cfg["na_if_all_zero"] and not any(values):
+            notes.append(f"{column}: CapFrameX field '{field}' is all zero -> NA")
+        else:
+            sources[column] = values
+    return sources, notes
 
 
 def convert_run(info, capture, cfg):
@@ -37,17 +58,7 @@ def convert_run(info, capture, cfg):
         raise ValueError("run has no MsBetweenPresents samples")
     n = len(frametimes)
     header = cfg["header"]
-    notes = []
-
-    sources = {}
-    for column, field in cfg["fields"].items():
-        values = capture.get(field)
-        if values is None or len(values) != n:
-            notes.append(f"{column}: CapFrameX field '{field}' missing -> NA")
-        elif column in cfg["na_if_all_zero"] and not any(values):
-            notes.append(f"{column}: CapFrameX field '{field}' is all zero -> NA")
-        else:
-            sources[column] = values
+    sources, notes = resolve_sources(capture, cfg)
 
     modes = capture.get("PresentMode")
     dropped = capture.get("Dropped") or [False] * n
@@ -76,6 +87,41 @@ def convert_run(info, capture, cfg):
             row.append(value)
         rows.append(row)
     return header, rows, notes
+
+
+def to_capture(capture, preset):
+    """CapFrameX CaptureData -> metrics.Capture, using the same mapping as the CSV converter.
+
+    Returns (Capture, notes). Standard series (per preset csv.columns) land in
+    Capture.series; every other mapped column lands in Capture.extra by CSV name.
+    """
+    from .metrics import Capture  # local import: metrics does not depend on this module
+
+    cfg = preset["capframex"]
+    frametimes = capture.get("MsBetweenPresents")
+    if not frametimes:
+        raise ValueError("run has no MsBetweenPresents samples")
+    n = len(frametimes)
+    sources, notes = resolve_sources(capture, cfg)
+    dropped = capture.get("Dropped") or [False] * n
+    na_dropped = set(cfg["na_when_dropped"])
+
+    def usable(column):
+        values = sources[column]
+        if column in na_dropped:
+            return [v for v, d in zip(values, dropped) if not d]
+        return list(values)
+
+    elapsed, times = 0.0, []
+    for ft in frametimes:
+        elapsed += ft
+        times.append(elapsed)
+
+    csv_columns = preset["csv"]["columns"]
+    standard = {name: key for key, name in csv_columns.items() if key not in ("frametime_ms", "time_ms")}
+    series = {key: usable(column) for column, key in standard.items() if column in sources}
+    extra = {column: usable(column) for column in sources if column not in standard}
+    return Capture(list(frametimes), times, series, False, extra), notes
 
 
 def write_csv(path, header, rows):

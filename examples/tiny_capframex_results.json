@@ -1,0 +1,311 @@
+[
+  {
+    "label": "Tiny boost 1",
+    "source": "tiny1CapFrameX-cs2.exe-2026-10-03T13526.json",
+    "info": {
+      "AppVersion": "1.9.1.5",
+      "Id": "857cf1af-0a71-40f2-8c64-9cc692921500",
+      "Processor": "AMD Ryzen 7 7800X3D",
+      "GameName": "Counter Strike 2",
+      "ProcessName": "cs2.exe",
+      "CreationDate": "2026-10-03T00:35:26.3037199Z",
+      "Motherboard": "Gigabyte B650 AORUS ELITE AX V2",
+      "OS": "Microsoft Windows 11 Pro Build 26200",
+      "SystemRam": "32GB (2x16GB) 6000MT/s",
+      "BaseDriverVersion": null,
+      "GPUDriverVersion": "617.14",
+      "DriverPackage": null,
+      "GPU": "NVIDIA GeForce RTX 4060",
+      "GPUCount": null,
+      "GpuCoreClock": null,
+      "GpuMemoryClock": null,
+      "Comment": "Tiny boost 1 run",
+      "ApiInfo": "unknown",
+      "ResizableBar": "Enabled",
+      "WinGameMode": "Disabled",
+      "HAGS": "Enabled",
+      "PresentationMode": "Fullscreen Optimized or Borderless",
+      "DisplayLayer": "Layer 1",
+      "ResolutionInfo": ""
+    },
+    "metrics": {
+      "avg_fps": 488.6040767176203,
+      "low1_fps": 203.3804593845864,
+      "low01_fps": 146.17330253594733,
+      "p1_fps": 241.75027196905597,
+      "p01_fps": 170.0853828621968,
+      "animation_error_avg_ms": 0.284855234948605,
+      "stutter_time_pct": 0.9066467472614069,
+      "gpu_latency_avg_ms": null,
+      "gpu_busy_avg_ms": 2.028996686857562,
+      "gpu_wait_avg_ms": null,
+      "avg_frametime_ms": 2.04664686123348,
+      "duration_secs": 111.50132099999999,
+      "frame_count": 54480,
+      "pc_latency_avg_ms": 3.4344982360499268,
+      "pc_latency_p99_ms": 6.8288,
+      "input_detected": false,
+      "frametime_min_ms": 0.2468,
+      "frametime_p99_ms": 4.1365,
+      "frametime_max_ms": 8.674,
+      "pcl_avg_ms": 6.671704030837005,
+      "pcl_p99_ms": 12.153,
+      "cpu_busy_avg_ms": 0.5756196457415566,
+      "in_present_avg_ms": 1.4710247613803231
+    },
+    "sensors": {
+      "Load/CPU Total": {
+        "avg": 24.09447768337241,
+        "min": 9.025099754333496,
+        "max": 52.313751220703125
+      },
+      "Load/CPU Max": {
+        "avg": 58.764925997262566,
+        "min": 33.83995819091797,
+        "max": 99.65032196044922
+      },
+      "Temperature/GPU Core": {
+        "avg": 58.46979865771812,
+        "min": 50.0,
+        "max": 62.0
+      },
+      "Clock/GPU Core": {
+        "avg": 2700.0,
+        "min": 2700.0,
+        "max": 2700.0
+      },
+      "Load/GPU Core": {
+        "avg": 98.40268456375838,
+        "min": 85.0,
+        "max": 100.0
+      },
+      "Data/GPU Memory Allocated": {
+        "avg": 1.8114721737718689,
+        "min": 1.5763931274414062,
+        "max": 1.9564018249511719
+      },
+      "Data/GPU Memory Dedicated": {
+        "avg": 2.667869115569181,
+        "min": 2.501636505126953,
+        "max": 2.717357635498047
+      },
+      "Power/GPU Power": {
+        "avg": 53.65700149536133,
+        "min": 53.65700149536133,
+        "max": 53.65700149536133
+      },
+      "Data/RAM Game Used": {
+        "avg": 3.481232406308987,
+        "min": 3.3809661865234375,
+        "max": 3.5699462890625
+      }
+    },
+    "notes": []
+  },
+  {
+    "label": "Tiny boost 2",
+    "source": "tiny2CapFrameX-cs2.exe-2026-10-03T13735.json",
+    "info": {
+      "AppVersion": "1.9.1.5",
+      "Id": "5a7d6ba3-eb9f-4bb3-9051-3f8f246e40dc",
+      "Processor": "AMD Ryzen 7 7800X3D",
+      "GameName": "Counter Strike 2",
+      "ProcessName": "cs2.exe",
+      "CreationDate": "2026-10-03T00:37:35.1848666Z",
+      "Motherboard": "Gigabyte B650 AORUS ELITE AX V2",
+      "OS": "Microsoft Windows 11 Pro Build 26200",
+      "SystemRam": "32GB (2x16GB) 6000MT/s",
+      "BaseDriverVersion": null,
+      "GPUDriverVersion": "617.14",
+      "DriverPackage": null,
+      "GPU": "NVIDIA GeForce RTX 4060",
+      "GPUCount": null,
+      "GpuCoreClock": null,
+      "GpuMemoryClock": null,
+      "Comment": "Tiny boost 2 ",
+      "ApiInfo": "unknown",
+      "ResizableBar": "Enabled",
+      "WinGameMode": "Disabled",
+      "HAGS": "Enabled",
+      "PresentationMode": "Fullscreen Optimized or Borderless",
+      "DisplayLayer": "Layer 1",
+      "ResolutionInfo": ""
+    },
+    "metrics": {
+      "avg_fps": 490.23490159845164,
+      "low1_fps": 205.92241929425182,
+      "low01_fps": 153.62098630259422,
+      "p1_fps": 244.3255393486281,
+      "p01_fps": 176.97862098258528,
+      "animation_error_avg_ms": 0.2909825832599765,
+      "stutter_time_pct": 0.8593613380668188,
+      "gpu_latency_avg_ms": null,
+      "gpu_busy_avg_ms": 2.0211154140991785,
+      "gpu_wait_avg_ms": null,
+      "avg_frametime_ms": 2.039838446302817,
+      "duration_secs": 111.2283108,
+      "frame_count": 54528,
+      "pc_latency_avg_ms": 3.4144407276995308,
+      "pc_latency_p99_ms": 6.7302,
+      "input_detected": false,
+      "frametime_min_ms": 0.3817,
+      "frametime_p99_ms": 4.0929,
+      "frametime_max_ms": 8.6126,
+      "pcl_avg_ms": 6.665516932585094,
+      "pcl_p99_ms": 11.7336,
+      "cpu_busy_avg_ms": 0.5804630483421361,
+      "in_present_avg_ms": 1.4593779232687796
+    },
+    "sensors": {
+      "Load/CPU Total": {
+        "avg": 21.471296246372052,
+        "min": 7.948304176330566,
+        "max": 62.46522903442383
+      },
+      "Load/CPU Max": {
+        "avg": 55.06579226878152,
+        "min": 29.919240951538086,
+        "max": 91.34716033935547
+      },
+      "Temperature/GPU Core": {
+        "avg": 61.48756218905473,
+        "min": 55.0,
+        "max": 64.0
+      },
+      "Clock/GPU Core": {
+        "avg": 2700.0,
+        "min": 2700.0,
+        "max": 2700.0
+      },
+      "Load/GPU Core": {
+        "avg": 98.25373134328358,
+        "min": 67.0,
+        "max": 100.0
+      },
+      "Data/GPU Memory Allocated": {
+        "avg": 1.923356839080355,
+        "min": 1.8278121948242188,
+        "max": 1.9555625915527344
+      },
+      "Data/GPU Memory Dedicated": {
+        "avg": 2.6621026660672467,
+        "min": 2.564056396484375,
+        "max": 2.695781707763672
+      },
+      "Power/GPU Power": {
+        "avg": 53.65700149536133,
+        "min": 53.65700149536133,
+        "max": 53.65700149536133
+      },
+      "Data/RAM Game Used": {
+        "avg": 3.5079325680709004,
+        "min": 3.482196807861328,
+        "max": 3.5820655822753906
+      }
+    },
+    "notes": []
+  },
+  {
+    "label": "Tiny boost 3",
+    "source": "tiny3CapFrameX-cs2.exe-2026-10-03T13945.json",
+    "info": {
+      "AppVersion": "1.9.1.5",
+      "Id": "310129bd-091e-4e7e-961c-a5aa9f23415b",
+      "Processor": "AMD Ryzen 7 7800X3D",
+      "GameName": "Counter Strike 2",
+      "ProcessName": "cs2.exe",
+      "CreationDate": "2026-10-03T00:39:45.5509152Z",
+      "Motherboard": "Gigabyte B650 AORUS ELITE AX V2",
+      "OS": "Microsoft Windows 11 Pro Build 26200",
+      "SystemRam": "32GB (2x16GB) 6000MT/s",
+      "BaseDriverVersion": null,
+      "GPUDriverVersion": "617.14",
+      "DriverPackage": null,
+      "GPU": "NVIDIA GeForce RTX 4060",
+      "GPUCount": null,
+      "GpuCoreClock": null,
+      "GpuMemoryClock": null,
+      "Comment": "Tiny boost 3",
+      "ApiInfo": "unknown",
+      "ResizableBar": "Enabled",
+      "WinGameMode": "Disabled",
+      "HAGS": "Enabled",
+      "PresentationMode": "Fullscreen Optimized or Borderless",
+      "DisplayLayer": "Layer 1",
+      "ResolutionInfo": ""
+    },
+    "metrics": {
+      "avg_fps": 487.74481997283175,
+      "low1_fps": 199.22187531036695,
+      "low01_fps": 142.66844993582512,
+      "p1_fps": 238.78316101148548,
+      "p01_fps": 172.9774610368269,
+      "animation_error_avg_ms": 0.2949918602291386,
+      "stutter_time_pct": 0.9990512700513192,
+      "gpu_latency_avg_ms": null,
+      "gpu_busy_avg_ms": 2.03017006438758,
+      "gpu_wait_avg_ms": null,
+      "avg_frametime_ms": 2.05025242514252,
+      "duration_secs": 111.12983220000001,
+      "frame_count": 54203,
+      "pc_latency_avg_ms": 3.432695559286386,
+      "pc_latency_p99_ms": 6.8014,
+      "input_detected": false,
+      "frametime_min_ms": 0.3351,
+      "frametime_p99_ms": 4.1879,
+      "frametime_max_ms": 28.8802,
+      "pcl_avg_ms": 6.660742433075661,
+      "pcl_p99_ms": 11.8166,
+      "cpu_busy_avg_ms": 0.5866147150526724,
+      "in_present_avg_ms": 1.463625797465085
+    },
+    "sensors": {
+      "Load/CPU Total": {
+        "avg": 21.076562528652996,
+        "min": 4.271773338317871,
+        "max": 42.513023376464844
+      },
+      "Load/CPU Max": {
+        "avg": 54.71239350408717,
+        "min": 21.025876998901367,
+        "max": 94.57575988769531
+      },
+      "Temperature/GPU Core": {
+        "avg": 62.426008968609864,
+        "min": 56.0,
+        "max": 65.0
+      },
+      "Clock/GPU Core": {
+        "avg": 2700.0,
+        "min": 2700.0,
+        "max": 2700.0
+      },
+      "Load/GPU Core": {
+        "avg": 98.20403587443946,
+        "min": 67.0,
+        "max": 100.0
+      },
+      "Data/GPU Memory Allocated": {
+        "avg": 1.8266092052374185,
+        "min": 1.4155540466308594,
+        "max": 1.9579582214355469
+      },
+      "Data/GPU Memory Dedicated": {
+        "avg": 2.6661099061837645,
+        "min": 2.570514678955078,
+        "max": 2.7034759521484375
+      },
+      "Power/GPU Power": {
+        "avg": 53.65700149536133,
+        "min": 53.65700149536133,
+        "max": 53.65700149536133
+      },
+      "Data/RAM Game Used": {
+        "avg": 3.504496955016269,
+        "min": 3.461994171142578,
+        "max": 3.693267822265625
+      }
+    },
+    "notes": []
+  }
+]
