@@ -1,0 +1,8 @@
+Antonio.ttf
+  Copyright 2013 The Antonio Project Authors (https://github.com/googlefonts/antonioFont)
+  Licensed under the SIL Open Font License, Version 1.1 (http://scripts.sil.org/OFL).
+  Bundled unmodified, extracted from the FrameCap example benchmark_report.html.
+
+logo.svg
+  TinyBoost wordmark, extracted from the FrameCap example benchmark_report.html.
+  Replace it (or set report.logo_svg to null in preset.json) for a different brand.

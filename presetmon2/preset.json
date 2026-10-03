@@ -1,0 +1,128 @@
+{
+  "schema": 1,
+  "name": "CS2 PresentMon 2 benchmark",
+  "description": "PresentMon 2 capture + report preset reproducing the FrameCap example benchmark (benchmark_report.html, benchmark_*.csv, benchmark_previous.json).",
+
+  "benchmark_id": {
+    "prefix": "TINYBOOST",
+    "hex_digits": 8,
+    "file": "benchmark_id.txt"
+  },
+
+  "capture": {
+    "executable": "PresentMon.exe",
+    "process_name": "cs2.exe",
+    "duration_secs": 104,
+    "delay_secs": 0,
+    "session_name": "PresetMon2Benchmark",
+    "output_dir": "%LOCALAPPDATA%\\PresetMon2\\benchmark",
+    "args": [
+      "--v2_metrics",
+      "--no_console_stats",
+      "--stop_existing_session",
+      "--terminate_after_timed"
+    ],
+    "passes": [
+      { "key": "before",       "label": "BEFORE",      "capture_label": "Before",  "csv": "benchmark_before.csv" },
+      { "key": "after",        "label": "TinyBoost 1", "capture_label": "After 1", "csv": "benchmark_after.csv" },
+      { "key": "after_second", "label": "TinyBoost 2", "capture_label": "After 2", "csv": "benchmark_after2.csv" },
+      { "key": "after_third",  "label": "TinyBoost 3", "capture_label": "After 3", "csv": "benchmark_after3.csv" }
+    ]
+  },
+
+  "csv": {
+    "na_values": ["", "NA"],
+    "required": ["frametime_ms"],
+    "columns": {
+      "time_ms": "TimeInMs",
+      "frametime_ms": "MsBetweenPresents",
+      "pc_latency_ms": "MsUntilDisplayed",
+      "gpu_latency_ms": "MsGPULatency",
+      "gpu_busy_ms": "MsGPUBusy",
+      "gpu_wait_ms": "MsGPUWait",
+      "animation_error_ms": "MsAnimationError"
+    },
+    "input_columns": ["MsAllInputToPhotonLatency", "MsClickToPhotonLatency"]
+  },
+
+  "metrics": {
+    "lows": { "low1_fps": 1.0, "low01_fps": 0.1 },
+    "percentiles": { "p1_fps": 99.0, "p01_fps": 99.9 },
+    "pc_latency_percentile": 99.0,
+    "animation_error": "mean_abs",
+    "stutter": { "threshold_multiplier": 2.5, "reference_pass": "before" },
+    "chart": {
+      "buckets": 320,
+      "ma_window": 8,
+      "y_steps": [0.5, 1, 2, 2.5, 5, 10, 20, 25, 50, 100, 200, 250, 500, 1000]
+    }
+  },
+
+  "report": {
+    "page_title": "TinyBoost Benchmark Report",
+    "heading": "Benchmark Results",
+    "logo_svg": "assets/logo.svg",
+    "font_file": "assets/Antonio.ttf",
+    "capture_heading": "Results captured with PresentMon 2",
+    "capture_label": "Raw benchmark captures:",
+    "note": "<b>Important note.</b> TinyBoost Automated BETA Benchmark runs one BEFORE pass and multiple AFTER passes on a fixed map. TinyBoost clears the shader cache, so the first AFTER pass often measures lower than BEFORE while CS2 rebuilds its shaders; the later passes are the ones to judge. Automated runs cannot fully reflect the real performance increase / decrease. We suggest you connect to a community deathmatch server and play the game to feel the difference.",
+
+    "colors": {
+      "neutral": "#dce5ed",
+      "improved": "#a5df19",
+      "slightly-regressed": "#ffb15d",
+      "regressed": "#ff6470"
+    },
+    "classification": {
+      "_note": "The example only brackets the orange/red boundary (-1% is orange, -9% is red). These two values are assumptions; tune them to taste.",
+      "regressed_below_pct": -5.0,
+      "regressed_above_ms": 0.25
+    },
+
+    "groups": [
+      {
+        "title": "Frame rate",
+        "subtitle": "FPS · higher is better",
+        "tiles": [
+          { "metric": "avg_fps",   "label": "AVG",          "decimals": 1, "suffix": "",    "better": "higher", "tooltip": "Average FPS over the whole run" },
+          { "metric": "p1_fps",    "label": "P1",           "decimals": 1, "suffix": "",    "better": "higher", "tooltip": "99% of frames were faster than this FPS" },
+          { "metric": "low1_fps",  "label": "1% Low Avg",   "decimals": 1, "suffix": "",    "better": "higher", "tooltip": "Average FPS of the slowest 1% of frames" },
+          { "metric": "low01_fps", "label": "0.1% Low Avg", "decimals": 1, "suffix": "",    "better": "higher", "tooltip": "Average FPS of the slowest 0.1% of frames" },
+          { "metric": "p01_fps",   "label": "P0.1",         "decimals": 1, "suffix": "",    "better": "higher", "tooltip": "99.9% of frames were faster than this FPS" }
+        ]
+      },
+      {
+        "title": "Smoothness & latency",
+        "subtitle": "lower is better",
+        "tiles": [
+          { "metric": "pc_latency_avg_ms",      "label": "PC Latency",      "decimals": 1, "suffix": " ms", "better": "lower", "tooltip": "Average time from frame start until the frame is displayed" },
+          { "metric": "animation_error_avg_ms", "label": "Animation Error", "decimals": 2, "suffix": " ms", "better": "lower", "tooltip": "How far on-screen motion drifts from the game simulation, per frame" },
+          { "metric": "stutter_time_pct",       "label": "Stuttering Time", "decimals": 2, "suffix": "%",   "better": "lower", "tooltip": "Share of capture time in frames longer than 2.5x the BEFORE average frametime; the same threshold is used for every pass" }
+        ]
+      },
+      {
+        "title": "GPU time per frame",
+        "subtitle": "lower is better",
+        "tiles": [
+          { "metric": "gpu_latency_avg_ms", "label": "GPU Latency", "decimals": 2, "suffix": " ms", "better": "lower", "tooltip": "Time from the start of a frame until the GPU starts working on it" },
+          { "metric": "gpu_busy_avg_ms",    "label": "GPU Busy",    "decimals": 2, "suffix": " ms", "better": "lower", "tooltip": "Time the GPU spends actively working on a frame" },
+          { "metric": "gpu_wait_avg_ms",    "label": "GPU Wait",    "decimals": 2, "suffix": " ms", "better": "lower", "tooltip": "Time the GPU sits idle while working on a frame" }
+        ]
+      }
+    ],
+
+    "uplift": [
+      { "metric": "avg_fps",                "header": "AVG FPS",          "mode": "percent",  "better": "higher" },
+      { "metric": "low1_fps",               "header": "1% Low Average",   "mode": "percent",  "better": "higher" },
+      { "metric": "p1_fps",                 "header": "P1 FPS",           "mode": "percent",  "better": "higher" },
+      { "metric": "low01_fps",              "header": "0.1% Low Average", "mode": "percent",  "better": "higher" },
+      { "metric": "p01_fps",                "header": "P0.1 FPS",         "mode": "percent",  "better": "higher" },
+      { "metric": "animation_error_avg_ms", "header": "Anim Error",       "mode": "percent",  "better": "lower" },
+      { "metric": "stutter_time_pct",       "header": "Stuttering",       "mode": "percent",  "better": "lower" },
+      { "metric": "gpu_latency_avg_ms",     "header": "GPU Latency",      "mode": "ms_delta", "better": "lower" },
+      { "metric": "gpu_busy_avg_ms",        "header": "GPU Busy",         "mode": "ms_delta", "better": "lower" },
+      { "metric": "gpu_wait_avg_ms",        "header": "GPU Wait",         "mode": "ms_delta", "better": "lower" },
+      { "metric": "pc_latency_avg_ms",      "header": "PC Latency",       "mode": "percent",  "better": "lower" }
+    ]
+  }
+}

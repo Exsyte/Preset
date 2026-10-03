@@ -1,0 +1,519 @@
+{
+ "source": "benchmark_report.html + benchmark_previous.json (FrameCap example folder)",
+ "headers": [
+  "",
+  "AVG FPS",
+  "1% Low Average",
+  "P1 FPS",
+  "0.1% Low Average",
+  "P0.1 FPS",
+  "Anim Error",
+  "Stuttering",
+  "GPU Latency",
+  "GPU Busy",
+  "GPU Wait",
+  "PC Latency"
+ ],
+ "tiles": {
+  "before": [
+   {
+    "label": "AVG",
+    "text": "515.0",
+    "class": "baseline"
+   },
+   {
+    "label": "P1",
+    "text": "260.5",
+    "class": "baseline"
+   },
+   {
+    "label": "1% Low Avg",
+    "text": "214.4",
+    "class": "baseline"
+   },
+   {
+    "label": "0.1% Low Avg",
+    "text": "155.9",
+    "class": "baseline"
+   },
+   {
+    "label": "P0.1",
+    "text": "180.8",
+    "class": "baseline"
+   },
+   {
+    "label": "PC Latency",
+    "text": "3.8 ms",
+    "class": "baseline"
+   },
+   {
+    "label": "Animation Error",
+    "text": "0.08 ms",
+    "class": "baseline"
+   },
+   {
+    "label": "Stuttering Time",
+    "text": "1.00%",
+    "class": "baseline"
+   },
+   {
+    "label": "GPU Latency",
+    "text": "1.87 ms",
+    "class": "baseline"
+   },
+   {
+    "label": "GPU Busy",
+    "text": "1.93 ms",
+    "class": "baseline"
+   },
+   {
+    "label": "GPU Wait",
+    "text": "0.01 ms",
+    "class": "baseline"
+   }
+  ],
+  "after": [
+   {
+    "label": "AVG",
+    "text": "514.3",
+    "class": "slightly-regressed"
+   },
+   {
+    "label": "P1",
+    "text": "265.0",
+    "class": "improved"
+   },
+   {
+    "label": "1% Low Avg",
+    "text": "220.3",
+    "class": "improved"
+   },
+   {
+    "label": "0.1% Low Avg",
+    "text": "161.2",
+    "class": "improved"
+   },
+   {
+    "label": "P0.1",
+    "text": "184.3",
+    "class": "improved"
+   },
+   {
+    "label": "PC Latency",
+    "text": "3.8 ms",
+    "class": "neutral"
+   },
+   {
+    "label": "Animation Error",
+    "text": "0.08 ms",
+    "class": "neutral"
+   },
+   {
+    "label": "Stuttering Time",
+    "text": "0.88%",
+    "class": "improved"
+   },
+   {
+    "label": "GPU Latency",
+    "text": "1.87 ms",
+    "class": "neutral"
+   },
+   {
+    "label": "GPU Busy",
+    "text": "1.93 ms",
+    "class": "neutral"
+   },
+   {
+    "label": "GPU Wait",
+    "text": "0.01 ms",
+    "class": "neutral"
+   }
+  ],
+  "after_second": [
+   {
+    "label": "AVG",
+    "text": "513.8",
+    "class": "slightly-regressed"
+   },
+   {
+    "label": "P1",
+    "text": "263.2",
+    "class": "improved"
+   },
+   {
+    "label": "1% Low Avg",
+    "text": "215.5",
+    "class": "improved"
+   },
+   {
+    "label": "0.1% Low Avg",
+    "text": "142.0",
+    "class": "regressed"
+   },
+   {
+    "label": "P0.1",
+    "text": "181.9",
+    "class": "improved"
+   },
+   {
+    "label": "PC Latency",
+    "text": "3.8 ms",
+    "class": "neutral"
+   },
+   {
+    "label": "Animation Error",
+    "text": "0.08 ms",
+    "class": "neutral"
+   },
+   {
+    "label": "Stuttering Time",
+    "text": "0.90%",
+    "class": "improved"
+   },
+   {
+    "label": "GPU Latency",
+    "text": "1.87 ms",
+    "class": "neutral"
+   },
+   {
+    "label": "GPU Busy",
+    "text": "1.93 ms",
+    "class": "neutral"
+   },
+   {
+    "label": "GPU Wait",
+    "text": "0.01 ms",
+    "class": "neutral"
+   }
+  ],
+  "after_third": [
+   {
+    "label": "AVG",
+    "text": "511.2",
+    "class": "slightly-regressed"
+   },
+   {
+    "label": "P1",
+    "text": "258.0",
+    "class": "slightly-regressed"
+   },
+   {
+    "label": "1% Low Avg",
+    "text": "214.5",
+    "class": "improved"
+   },
+   {
+    "label": "0.1% Low Avg",
+    "text": "161.0",
+    "class": "improved"
+   },
+   {
+    "label": "P0.1",
+    "text": "182.1",
+    "class": "improved"
+   },
+   {
+    "label": "PC Latency",
+    "text": "3.8 ms",
+    "class": "neutral"
+   },
+   {
+    "label": "Animation Error",
+    "text": "0.08 ms",
+    "class": "neutral"
+   },
+   {
+    "label": "Stuttering Time",
+    "text": "0.99%",
+    "class": "improved"
+   },
+   {
+    "label": "GPU Latency",
+    "text": "1.88 ms",
+    "class": "slightly-regressed"
+   },
+   {
+    "label": "GPU Busy",
+    "text": "1.94 ms",
+    "class": "slightly-regressed"
+   },
+   {
+    "label": "GPU Wait",
+    "text": "0.01 ms",
+    "class": "neutral"
+   }
+  ]
+ },
+ "cstats": {
+  "before": [
+   {
+    "label": "MIN",
+    "text": "0.45"
+   },
+   {
+    "label": "AVG",
+    "text": "1.94"
+   },
+   {
+    "label": "P99",
+    "text": "3.84"
+   },
+   {
+    "label": "MAX",
+    "text": "8.53"
+   }
+  ],
+  "after": [
+   {
+    "label": "MIN",
+    "text": "0.49"
+   },
+   {
+    "label": "AVG",
+    "text": "1.94"
+   },
+   {
+    "label": "P99",
+    "text": "3.77"
+   },
+   {
+    "label": "MAX",
+    "text": "7.88"
+   }
+  ],
+  "after_second": [
+   {
+    "label": "MIN",
+    "text": "0.54"
+   },
+   {
+    "label": "AVG",
+    "text": "1.95"
+   },
+   {
+    "label": "P99",
+    "text": "3.80"
+   },
+   {
+    "label": "MAX",
+    "text": "41.47"
+   }
+  ],
+  "after_third": [
+   {
+    "label": "MIN",
+    "text": "0.27"
+   },
+   {
+    "label": "AVG",
+    "text": "1.96"
+   },
+   {
+    "label": "P99",
+    "text": "3.88"
+   },
+   {
+    "label": "MAX",
+    "text": "7.88"
+   }
+  ]
+ },
+ "table": [
+  {
+   "row": "TinyBoost 1 vs BEFORE",
+   "cells": [
+    {
+     "text": "+0%",
+     "color": "#dce5ed"
+    },
+    {
+     "text": "+3%",
+     "color": "#a5df19"
+    },
+    {
+     "text": "+2%",
+     "color": "#a5df19"
+    },
+    {
+     "text": "+3%",
+     "color": "#a5df19"
+    },
+    {
+     "text": "+2%",
+     "color": "#a5df19"
+    },
+    {
+     "text": "-3%",
+     "color": "#a5df19"
+    },
+    {
+     "text": "-12%",
+     "color": "#a5df19"
+    },
+    {
+     "text": "+0.00 ms",
+     "color": "#dce5ed"
+    },
+    {
+     "text": "+0.00 ms",
+     "color": "#dce5ed"
+    },
+    {
+     "text": "+0.00 ms",
+     "color": "#dce5ed"
+    },
+    {
+     "text": "+0%",
+     "color": "#dce5ed"
+    }
+   ]
+  },
+  {
+   "row": "TinyBoost 2 vs BEFORE",
+   "cells": [
+    {
+     "text": "+0%",
+     "color": "#dce5ed"
+    },
+    {
+     "text": "+0%",
+     "color": "#dce5ed"
+    },
+    {
+     "text": "+1%",
+     "color": "#a5df19"
+    },
+    {
+     "text": "-9%",
+     "color": "#ff6470"
+    },
+    {
+     "text": "+1%",
+     "color": "#a5df19"
+    },
+    {
+     "text": "+2%",
+     "color": "#ffb15d"
+    },
+    {
+     "text": "-10%",
+     "color": "#a5df19"
+    },
+    {
+     "text": "+0.00 ms",
+     "color": "#dce5ed"
+    },
+    {
+     "text": "+0.00 ms",
+     "color": "#dce5ed"
+    },
+    {
+     "text": "+0.00 ms",
+     "color": "#dce5ed"
+    },
+    {
+     "text": "+0%",
+     "color": "#dce5ed"
+    }
+   ]
+  },
+  {
+   "row": "TinyBoost 3 vs BEFORE",
+   "cells": [
+    {
+     "text": "-1%",
+     "color": "#ffb15d"
+    },
+    {
+     "text": "+0%",
+     "color": "#dce5ed"
+    },
+    {
+     "text": "-1%",
+     "color": "#ffb15d"
+    },
+    {
+     "text": "+3%",
+     "color": "#a5df19"
+    },
+    {
+     "text": "+1%",
+     "color": "#a5df19"
+    },
+    {
+     "text": "-1%",
+     "color": "#a5df19"
+    },
+    {
+     "text": "-1%",
+     "color": "#a5df19"
+    },
+    {
+     "text": "+0.01 ms",
+     "color": "#ffb15d"
+    },
+    {
+     "text": "+0.02 ms",
+     "color": "#ffb15d"
+    },
+    {
+     "text": "+0.00 ms",
+     "color": "#dce5ed"
+    },
+    {
+     "text": "+1%",
+     "color": "#ffb15d"
+    }
+   ]
+  },
+  {
+   "row": "Average vs BEFORE",
+   "cells": [
+    {
+     "text": "+0%",
+     "color": "#dce5ed"
+    },
+    {
+     "text": "+1%",
+     "color": "#a5df19"
+    },
+    {
+     "text": "+1%",
+     "color": "#a5df19"
+    },
+    {
+     "text": "-1%",
+     "color": "#ffb15d"
+    },
+    {
+     "text": "+1%",
+     "color": "#a5df19"
+    },
+    {
+     "text": "-1%",
+     "color": "#a5df19"
+    },
+    {
+     "text": "-8%",
+     "color": "#a5df19"
+    },
+    {
+     "text": "+0.00 ms",
+     "color": "#dce5ed"
+    },
+    {
+     "text": "+0.01 ms",
+     "color": "#ffb15d"
+    },
+    {
+     "text": "+0.00 ms",
+     "color": "#dce5ed"
+    },
+    {
+     "text": "+0%",
+     "color": "#dce5ed"
+    }
+   ]
+  }
+ ]
+}
