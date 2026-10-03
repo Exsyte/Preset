@@ -137,6 +137,36 @@ Verified: every frame-rate and time tile was recomputed independently (numpy, no
 CapFrameX arrays and matches; the page was loaded in headless Chromium with no script errors, the count-up animation
 settles on the right values and the Copy buttons work.
 
+## Comparing two sets of CapFrameX captures
+
+```sh
+python -m presetmon2 capframex-compare \
+    --set "Tiny boost"       tiny1CapFrameX-*.json tiny2CapFrameX-*.json tiny3CapFrameX-*.json \
+    --set "My configuration" CapFrameX-*T23548.json CapFrameX-*T23759.json CapFrameX-*T2408.json \
+    --out comparison.html --json comparison.json
+```
+
+The first `--set` is the baseline; the second is coloured against it with the same rules as the PresentMon report
+(green = better, orange = slightly worse, red = clearly worse). Each column is the mean of that set's runs. The sheet
+also has: a **run-to-run check** (do the min-max ranges of the two sets overlap? if so the difference is no bigger
+than the runs vary among themselves), a frame-time distribution chart (frame time at each percentile, thin lines =
+single runs), every run with mean and spread, how the two systems differ, and a sensor comparison. The example is
+[`examples/tiny_vs_own_config_comparison.html`](../examples/tiny_vs_own_config_comparison.html), next to the two
+single-set sheets it was built from (`tiny_capframex_report.html`, `own_config_capframex_report.html`).
+
+Things that keep the comparison honest:
+
+* **Same stutter threshold everywhere.** Stutter is the metric most sensitive to its threshold (5.11 ms vs 5.00 ms moved
+  the Tiny boost runs from 0.91 / 0.86 / 1.00 % to 1.02 / 0.97 / 1.14 %). The comparison uses 2.5 x the mean frametime of
+  *all* runs, and `capframex-report --stutter-reference-ms` takes that value so the single-set sheets match it (the command
+  prints it).
+* **Stuck sensors are not compared.** In the Tiny boost captures the GPU clock (2700 MHz) and GPU power (53.7 W) are one
+  identical value for the whole 111 s, i.e. the sensor was not updating, while the other set has live readings. Such rows are
+  marked with a dagger and show `n/a` instead of a difference.
+* **The sets were captured at different times** (about an hour apart), and CapFrameX records only some of the system
+  state - in these files just Windows Game Mode differs (Disabled vs Enabled). Anything else that changed in between is part
+  of the measured difference, so the sheet reports the difference, not its cause.
+
 ## Verified against the example files
 
 Run with the example `benchmark_previous.json` (which stores all four passes' frametimes and the
@@ -189,13 +219,14 @@ python -m unittest discover -s tests -t .
 presetmon2/
   preset.json         the pre-configuration
   run_benchmark.ps1   Windows runner (PresentMon 2 capture + report)
-  cli.py              python -m presetmon2 {report,capframex-report,convert,metrics,verify}
+  cli.py              python -m presetmon2 {report,capframex-report,capframex-compare,convert,metrics,verify}
   capframex.py        CapFrameX JSON -> PresentMon 2 CSV converter / in-memory capture
   capframex_report.py CapFrameX JSON -> PresentMon-style HTML report
+  capframex_compare.py two sets of CapFrameX runs -> comparison sheet
   metrics.py          CSV parsing + statistics
   compare.py          tile / uplift presentation rules
   report.py           HTML report
   assets/             report CSS/JS (from the example), Antonio font, logo (see NOTICE.txt)
-examples/             report + results built from the three FrameCap CapFrameX captures
+examples/             sheets built from the FrameCap CapFrameX captures (Tiny boost, own configuration, comparison)
 tests/                unit tests + fixtures taken from the example report
 ```

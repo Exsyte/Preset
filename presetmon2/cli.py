@@ -7,7 +7,7 @@ import sys
 import uuid
 from pathlib import Path
 
-from . import capframex, capframex_report, compare, metrics, report
+from . import capframex, capframex_compare, capframex_report, compare, metrics, report
 from .preset import load_preset, output_dir, pass_specs
 
 
@@ -144,7 +144,7 @@ def cmd_convert(args):
 def cmd_capframex_report(args):
     """CapFrameX JSON -> PresentMon-style HTML report."""
     preset = load_preset(args.preset)
-    runs = capframex_report.collect_runs(args.input, preset, args.label)
+    runs = capframex_report.collect_runs(args.input, preset, args.label, args.stutter_reference_ms)
     html = capframex_report.render_html(preset, runs)
 
     out = Path(args.out) if args.out else Path(args.input[0]).with_name("benchmark_report_capframex.html")
@@ -160,6 +160,31 @@ def cmd_capframex_report(args):
               f"{m['avg_fps']:.1f} FPS avg, 1% low {m['low1_fps']:.1f}, 0.1% low {m['low01_fps']:.1f}")
         for note in r["notes"]:
             print(f"     note: {note}")
+
+
+def cmd_capframex_compare(args):
+    """Two sets of CapFrameX runs -> one comparison HTML sheet."""
+    preset = load_preset(args.preset)
+    if len(args.sets) != 2:
+        raise ValueError("--set must be given exactly twice (baseline first, then the set to compare)")
+    specs = []
+    for item in args.sets:
+        if len(item) < 2:
+            raise ValueError("--set needs a label followed by at least one CapFrameX file")
+        specs.append((item[0], item[1:]))
+    sets, reference = capframex_compare.build_sets(specs, preset, args.stutter_reference_ms)
+    html = capframex_compare.render_html(preset, sets, reference)
+
+    out = Path(args.out) if args.out else Path(specs[0][1][0]).with_name("benchmark_comparison_capframex.html")
+    out.write_text(html, encoding="utf-8")
+    print(f"comparison: {out}\nstutter reference: {reference:.6f} ms (use --stutter-reference-ms on single reports)")
+    if args.json:
+        Path(args.json).write_text(json.dumps(capframex_compare.export_json(sets, reference, preset), indent=2) + "\n",
+                                   encoding="utf-8")
+        print(f"results: {args.json}")
+    base, other = sets
+    for key in ("avg_fps", "low1_fps", "low01_fps", "stutter_time_pct"):
+        print(f"  {key}: {base['label']} {base['mean'][key]:.2f} -> {other['label']} {other['mean'][key]:.2f}")
 
 
 def cmd_metrics(args):
@@ -283,7 +308,20 @@ def main(argv=None):
     p.add_argument("--json", help="also write the metrics, sensors and system info of every run as JSON")
     p.add_argument("--label", action="append", metavar="TEXT",
                    help="column label for each run, in order (repeat per run; default: the capture comment)")
+    p.add_argument("--stutter-reference-ms", type=float, metavar="MS",
+                   help="reference frametime for the stutter threshold (default: mean frametime of these runs); "
+                        "use the same value on reports you want to compare")
     p.set_defaults(func=cmd_capframex_report)
+
+    p = sub.add_parser("capframex-compare",
+                       help="compare two sets of CapFrameX captures (e.g. two configurations) in one HTML sheet")
+    p.add_argument("--set", dest="sets", action="append", nargs="+", required=True, metavar=("LABEL", "FILE"),
+                   help="a set: its label, then its CapFrameX .json files; give twice, baseline first")
+    p.add_argument("--out", help="HTML path (default: benchmark_comparison_capframex.html next to the first file)")
+    p.add_argument("--json", help="also write the set means, ranges, deltas and per-run data as JSON")
+    p.add_argument("--stutter-reference-ms", type=float, metavar="MS",
+                   help="reference frametime for the stutter threshold (default: mean frametime of all runs)")
+    p.set_defaults(func=cmd_capframex_compare)
 
     p = sub.add_parser("metrics", help="print the statistics of one or more CSVs as JSON")
     p.add_argument("csv", nargs="+")

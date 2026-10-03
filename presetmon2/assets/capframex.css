@@ -19,3 +19,13 @@
 .cmp td.rl{white-space:nowrap}
 .note-line{color:#9aa6b5;font-family:'Segoe UI',system-ui,sans-serif;font-size:11px;margin-top:8px}
 .capture-meta{color:#93a7ba;font-family:'Segoe UI',system-ui,sans-serif;font-size:11px;margin:2px 0 6px}
+.panels.equal{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:980px){.panels.equal{grid-template-columns:1fr}}
+.chartbox.wide{margin-top:16px}
+.sensors tr.differs td{color:#ffbe19}
+.sensors tr.differs td.rl{color:#ffbe19}
+.sensors td{overflow-wrap:anywhere}
+.uplift.sysdiff tbody td:not(.rl){font-size:13px;font-weight:700;text-align:left;letter-spacing:0}
+.uplift.sysdiff th{text-align:left}
+.uplift.sysdiff th:first-child{width:24%}
+.uplift.sysdiff tr.differs td:last-child{font-size:11px;letter-spacing:.06em;text-transform:uppercase}

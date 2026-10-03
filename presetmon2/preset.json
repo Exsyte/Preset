@@ -100,36 +100,36 @@
     "capture_heading": "Results captured with CapFrameX {version}",
     "capture_label": "Source captures:",
     "note": "<b>About this report.</b> Exported from CapFrameX capture files into the PresentMon benchmark report layout. The runs are shown side by side - there is no BEFORE pass in these files, so nothing is coloured as better or worse. P1 / P0.1 / lows follow the same definitions as the benchmark report; CapFrameX's own screen may differ in the last digit. Sensor rows that CapFrameX recorded as all zero (sensor not readable) are left out.",
-    "peer_reference_note": "Share of capture time in frames longer than 2.5x the mean frametime of all runs; the same threshold is used for every run",
+    "peer_reference_note": "Share of capture time in frames longer than {threshold:.2f} ms (2.5x the {reference:.3f} ms reference frametime); the same threshold is used for every run",
     "groups": [
       {
         "title": "Frame rate",
         "subtitle": "FPS \u00b7 higher is better",
         "tiles": [
-          { "metric": "avg_fps",   "label": "AVG",          "decimals": 1, "suffix": "", "tooltip": "Average FPS over the whole run" },
-          { "metric": "p1_fps",    "label": "P1",           "decimals": 1, "suffix": "", "tooltip": "99% of frames were faster than this FPS" },
-          { "metric": "low1_fps",  "label": "1% Low Avg",   "decimals": 1, "suffix": "", "tooltip": "Average FPS of the slowest 1% of frames" },
-          { "metric": "low01_fps", "label": "0.1% Low Avg", "decimals": 1, "suffix": "", "tooltip": "Average FPS of the slowest 0.1% of frames" },
-          { "metric": "p01_fps",   "label": "P0.1",         "decimals": 1, "suffix": "", "tooltip": "99.9% of frames were faster than this FPS" }
+          { "metric": "avg_fps",   "label": "AVG",          "decimals": 1, "suffix": "", "better": "higher", "tooltip": "Average FPS over the whole run" },
+          { "metric": "p1_fps",    "label": "P1",           "decimals": 1, "suffix": "", "better": "higher", "tooltip": "99% of frames were faster than this FPS" },
+          { "metric": "low1_fps",  "label": "1% Low Avg",   "decimals": 1, "suffix": "", "better": "higher", "tooltip": "Average FPS of the slowest 1% of frames" },
+          { "metric": "low01_fps", "label": "0.1% Low Avg", "decimals": 1, "suffix": "", "better": "higher", "tooltip": "Average FPS of the slowest 0.1% of frames" },
+          { "metric": "p01_fps",   "label": "P0.1",         "decimals": 1, "suffix": "", "better": "higher", "tooltip": "99.9% of frames were faster than this FPS" }
         ]
       },
       {
         "title": "Smoothness & latency",
         "subtitle": "lower is better",
         "tiles": [
-          { "metric": "pc_latency_avg_ms",      "label": "PC Latency",      "decimals": 1, "suffix": " ms", "tooltip": "Average time from frame start until the frame is displayed (MsUntilDisplayed)" },
-          { "metric": "pcl_avg_ms",             "label": "PCL",             "decimals": 1, "suffix": " ms", "tooltip": "PresentMon PC latency as recorded by CapFrameX (PcLatency)" },
-          { "metric": "animation_error_avg_ms", "label": "Anim Error", "decimals": 2, "suffix": " ms", "tooltip": "Animation error: how far on-screen motion drifts from the game simulation, per frame (mean absolute value)" },
-          { "metric": "stutter_time_pct",       "label": "Stutter Time",    "decimals": 2, "suffix": "%",   "tooltip": "@stutter" }
+          { "metric": "pc_latency_avg_ms",      "label": "PC Latency",      "decimals": 1, "suffix": " ms", "better": "lower", "tooltip": "Average time from frame start until the frame is displayed (MsUntilDisplayed)" },
+          { "metric": "pcl_avg_ms",             "label": "PCL",             "decimals": 1, "suffix": " ms", "better": "lower", "tooltip": "PresentMon PC latency as recorded by CapFrameX (PcLatency)" },
+          { "metric": "animation_error_avg_ms", "label": "Anim Error", "decimals": 2, "suffix": " ms", "better": "lower", "tooltip": "Animation error: how far on-screen motion drifts from the game simulation, per frame (mean absolute value)" },
+          { "metric": "stutter_time_pct",       "label": "Stutter Time",    "decimals": 2, "suffix": "%",   "better": "lower", "tooltip": "@stutter" }
         ]
       },
       {
         "title": "CPU & GPU time per frame",
         "subtitle": "lower is better",
         "tiles": [
-          { "metric": "cpu_busy_avg_ms",    "label": "CPU Busy",       "decimals": 2, "suffix": " ms", "tooltip": "Time the CPU spends actively working on a frame (CpuActive)" },
-          { "metric": "gpu_busy_avg_ms",    "label": "GPU Busy",       "decimals": 2, "suffix": " ms", "tooltip": "Time the GPU spends actively working on a frame (GpuActive)" },
-          { "metric": "in_present_avg_ms",  "label": "In Present API", "decimals": 2, "suffix": " ms", "tooltip": "Time spent inside the Present() call" }
+          { "metric": "cpu_busy_avg_ms",    "label": "CPU Busy",       "decimals": 2, "suffix": " ms", "better": "lower", "tooltip": "Time the CPU spends actively working on a frame (CpuActive)" },
+          { "metric": "gpu_busy_avg_ms",    "label": "GPU Busy",       "decimals": 2, "suffix": " ms", "better": "lower", "tooltip": "Time the GPU spends actively working on a frame (GpuActive)" },
+          { "metric": "in_present_avg_ms",  "label": "In Present API", "decimals": 2, "suffix": " ms", "better": "lower", "tooltip": "Time spent inside the Present() call" }
         ]
       }
     ],
@@ -180,6 +180,28 @@
       { "type": "Data",        "name": "GPU Memory Dedicated","label": "GPU memory dedicated",      "unit": "GB",  "decimals": 2 },
       { "type": "Data",        "name": "RAM Game Used",       "label": "RAM used by game",          "unit": "GB",  "decimals": 2 }
     ]
+  },
+
+  "capframex_compare": {
+    "_note": "Two sets of CapFrameX runs compared in one sheet. The first set is the baseline; the second is coloured relative to it (green = better, orange = slightly worse, red = clearly worse). 'Run-to-run check' says whether the min-max ranges of the two sets overlap - if they do, the difference is within what the runs themselves vary by.",
+    "page_title": "Configuration Comparison (CapFrameX)",
+    "capture_heading": "Results captured with CapFrameX {version}",
+    "capture_label": "Source captures:",
+    "note": "<b>How to read this.</b> Each column is the mean of that set's runs. The first set is the baseline; the second is coloured relative to it. <b>Run-to-run check</b> compares the min-max range of the runs: \"within spread\" means the ranges overlap, so the difference is no bigger than the runs vary among themselves. Both sets use the same stutter threshold. The sets were captured at different times, so anything else that changed in between (temperatures, background load, settings CapFrameX does not record) is part of the difference.",
+    "uplift": [
+      { "metric": "avg_fps",                "header": "AVG FPS",          "mode": "percent",  "better": "higher" },
+      { "metric": "low1_fps",               "header": "1% Low Average",   "mode": "percent",  "better": "higher" },
+      { "metric": "p1_fps",                 "header": "P1 FPS",           "mode": "percent",  "better": "higher" },
+      { "metric": "low01_fps",              "header": "0.1% Low Average", "mode": "percent",  "better": "higher" },
+      { "metric": "p01_fps",                "header": "P0.1 FPS",         "mode": "percent",  "better": "higher" },
+      { "metric": "animation_error_avg_ms", "header": "Anim Error",       "mode": "percent",  "better": "lower" },
+      { "metric": "stutter_time_pct",       "header": "Stuttering",       "mode": "percent",  "better": "lower" },
+      { "metric": "pc_latency_avg_ms",      "header": "PC Latency",       "mode": "percent",  "better": "lower" },
+      { "metric": "pcl_avg_ms",             "header": "PCL",              "mode": "percent",  "better": "lower" },
+      { "metric": "cpu_busy_avg_ms",        "header": "CPU Busy",         "mode": "ms_delta", "better": "lower" },
+      { "metric": "gpu_busy_avg_ms",        "header": "GPU Busy",         "mode": "ms_delta", "better": "lower" }
+    ],
+    "distribution": { "points": 240, "min_x": 0.30103, "max_x": 4.0 }
   },
 
   "report": {

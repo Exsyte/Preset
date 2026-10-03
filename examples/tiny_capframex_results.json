@@ -35,7 +35,7 @@
       "p1_fps": 241.75027196905597,
       "p01_fps": 170.0853828621968,
       "animation_error_avg_ms": 0.284855234948605,
-      "stutter_time_pct": 0.9066467472614069,
+      "stutter_time_pct": 1.020053654790332,
       "gpu_latency_avg_ms": null,
       "gpu_busy_avg_ms": 2.028996686857562,
       "gpu_wait_avg_ms": null,
@@ -51,7 +51,9 @@
       "pcl_avg_ms": 6.671704030837005,
       "pcl_p99_ms": 12.153,
       "cpu_busy_avg_ms": 0.5756196457415566,
-      "in_present_avg_ms": 1.4710247613803231
+      "in_present_avg_ms": 1.4710247613803231,
+      "stutter_reference_ms": 1.9997239828026803,
+      "stutter_threshold_ms": 4.999309957006701
     },
     "sensors": {
       "Load/CPU Total": {
@@ -138,7 +140,7 @@
       "p1_fps": 244.3255393486281,
       "p01_fps": 176.97862098258528,
       "animation_error_avg_ms": 0.2909825832599765,
-      "stutter_time_pct": 0.8593613380668188,
+      "stutter_time_pct": 0.9727683466716821,
       "gpu_latency_avg_ms": null,
       "gpu_busy_avg_ms": 2.0211154140991785,
       "gpu_wait_avg_ms": null,
@@ -154,7 +156,9 @@
       "pcl_avg_ms": 6.665516932585094,
       "pcl_p99_ms": 11.7336,
       "cpu_busy_avg_ms": 0.5804630483421361,
-      "in_present_avg_ms": 1.4593779232687796
+      "in_present_avg_ms": 1.4593779232687796,
+      "stutter_reference_ms": 1.9997239828026803,
+      "stutter_threshold_ms": 4.999309957006701
     },
     "sensors": {
       "Load/CPU Total": {
@@ -241,7 +245,7 @@
       "p1_fps": 238.78316101148548,
       "p01_fps": 172.9774610368269,
       "animation_error_avg_ms": 0.2949918602291386,
-      "stutter_time_pct": 0.9990512700513192,
+      "stutter_time_pct": 1.135373981065005,
       "gpu_latency_avg_ms": null,
       "gpu_busy_avg_ms": 2.03017006438758,
       "gpu_wait_avg_ms": null,
@@ -257,7 +261,9 @@
       "pcl_avg_ms": 6.660742433075661,
       "pcl_p99_ms": 11.8166,
       "cpu_busy_avg_ms": 0.5866147150526724,
-      "in_present_avg_ms": 1.463625797465085
+      "in_present_avg_ms": 1.463625797465085,
+      "stutter_reference_ms": 1.9997239828026803,
+      "stutter_threshold_ms": 4.999309957006701
     },
     "sensors": {
       "Load/CPU Total": {

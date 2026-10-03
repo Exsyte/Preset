@@ -36,12 +36,8 @@ def _created(info):
     return stamp
 
 
-def collect_runs(paths, preset, labels=None):
-    """Load every run from the CapFrameX files and compute its metrics.
-
-    Stuttering uses one common threshold for all runs: 2.5 x the mean of the runs'
-    average frametimes (the reference pass of the PresentMon report does not exist here).
-    """
+def load_runs(paths, preset, labels=None):
+    """Read the CapFrameX files into run dicts (no metrics yet)."""
     runs = []
     for path in paths:
         info, file_hash, file_runs = capframex.load_file(path)
@@ -56,21 +52,48 @@ def collect_runs(paths, preset, labels=None):
             })
     if labels and len(labels) != len(runs):
         raise ValueError(f"--label given {len(labels)} time(s) but {len(runs)} run(s) were loaded")
+    return runs
 
-    reference = _mean([_mean(r["capture"].frametime_ms) for r in runs])
+
+def common_reference_ms(runs):
+    """Mean of the runs' average frametimes: the shared stutter reference."""
+    return _mean([_mean(r["capture"].frametime_ms) for r in runs])
+
+
+def compute_runs(runs, preset, reference_ms):
+    """Add metrics, chart data and sensor summaries to every run.
+
+    Stuttering uses one threshold for all runs: threshold_multiplier x reference_ms
+    (a BEFORE pass does not exist here, so the reference is the mean frametime of the
+    runs being shown/compared).
+    """
+    multiplier = preset["metrics"]["stutter"]["threshold_multiplier"]
     for r in runs:
         cap = r["capture"]
-        m = metrics.compute_metrics(cap, preset["metrics"], reference)
+        m = metrics.compute_metrics(cap, preset["metrics"], reference_ms)
         pcl = cap.extra.get("MsPCLatency", [])
         m["pcl_avg_ms"] = _mean(pcl)
         m["pcl_p99_ms"] = metrics.nearest_rank(sorted(pcl), 99.0) if pcl else None
         m["cpu_busy_avg_ms"] = _mean(cap.extra.get("MsCPUBusy", []))
         m["in_present_avg_ms"] = _mean(cap.extra.get("MsInPresentAPI", []))
+        m["stutter_reference_ms"] = reference_ms
+        m["stutter_threshold_ms"] = multiplier * reference_ms
         r["metrics"] = m
         r["chart"] = metrics.chart_data(cap, preset["metrics"]["chart"])
         r["sensor_summary"] = [summarize_sensor(r["sensors"], spec)
                                for spec in preset["capframex_report"]["sensors"]]
     return runs
+
+
+def collect_runs(paths, preset, labels=None, reference_ms=None):
+    """Load every run from the CapFrameX files and compute its metrics."""
+    runs = load_runs(paths, preset, labels)
+    return compute_runs(runs, preset, reference_ms or common_reference_ms(runs))
+
+
+def stutter_tooltip(preset, metrics_):
+    return preset["capframex_report"]["peer_reference_note"].format(
+        threshold=metrics_["stutter_threshold_ms"], reference=metrics_["stutter_reference_ms"])
 
 
 def _summarize(sensor):
@@ -97,7 +120,7 @@ def build_view(preset, runs):
         for group in xcfg["groups"]:
             tiles = []
             for tile in group["tiles"]:
-                tooltip = xcfg["peer_reference_note"] if tile["tooltip"] == "@stutter" else tile["tooltip"]
+                tooltip = stutter_tooltip(preset, r["metrics"]) if tile["tooltip"] == "@stutter" else tile["tooltip"]
                 tiles.append({"label": tile["label"], "class": "neutral", "tooltip": tooltip,
                               "text": format_tile(r["metrics"].get(tile["metric"]), tile)})
             groups.append({"title": group["title"], "subtitle": group["subtitle"], "tiles": tiles})

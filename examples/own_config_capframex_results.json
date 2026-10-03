@@ -1,0 +1,332 @@
+[
+  {
+    "label": "Sajat run 1",
+    "source": "CapFrameX-cs2.exe-2026-10-03T23548.json",
+    "info": {
+      "AppVersion": "1.9.1.5",
+      "Id": "c27524ec-817a-48b0-970c-9c69347121c7",
+      "Processor": "AMD Ryzen 7 7800X3D",
+      "GameName": "Counter Strike 2",
+      "ProcessName": "cs2.exe",
+      "CreationDate": "2026-10-03T01:35:48.5867849Z",
+      "Motherboard": "Gigabyte B650 AORUS ELITE AX V2",
+      "OS": "Microsoft Windows 11 Pro Build 26200",
+      "SystemRam": "32GB (2x16GB) 6000MT/s",
+      "BaseDriverVersion": null,
+      "GPUDriverVersion": "617.14",
+      "DriverPackage": null,
+      "GPU": "NVIDIA GeForce RTX 4060",
+      "GPUCount": null,
+      "GpuCoreClock": null,
+      "GpuMemoryClock": null,
+      "Comment": "Sajat run 1",
+      "ApiInfo": "unknown",
+      "ResizableBar": "Enabled",
+      "WinGameMode": "Enabled",
+      "HAGS": "Enabled",
+      "PresentationMode": "Fullscreen Optimized or Borderless",
+      "DisplayLayer": "Layer 1",
+      "ResolutionInfo": ""
+    },
+    "metrics": {
+      "avg_fps": 511.2482067784618,
+      "low1_fps": 216.470327825256,
+      "low01_fps": 161.289637989652,
+      "p1_fps": 253.96180414465664,
+      "p01_fps": 184.8531341848901,
+      "animation_error_avg_ms": 0.29116661378179703,
+      "stutter_time_pct": 0.6334639890775675,
+      "gpu_latency_avg_ms": null,
+      "gpu_busy_avg_ms": 1.9360261603821813,
+      "gpu_wait_avg_ms": null,
+      "avg_frametime_ms": 1.9559970807551958,
+      "duration_secs": 110.9578464,
+      "frame_count": 56727,
+      "pc_latency_avg_ms": 3.2368539284643996,
+      "pc_latency_p99_ms": 6.3564,
+      "input_detected": false,
+      "frametime_min_ms": 0.326,
+      "frametime_p99_ms": 3.9376,
+      "frametime_max_ms": 7.9958,
+      "pcl_avg_ms": 6.399127181060165,
+      "pcl_p99_ms": 11.4573,
+      "cpu_busy_avg_ms": 0.5906532162814886,
+      "in_present_avg_ms": 1.3653460609586265,
+      "stutter_reference_ms": 1.9997239828026803,
+      "stutter_threshold_ms": 4.999309957006701
+    },
+    "sensors": {
+      "Load/CPU Total": {
+        "avg": 27.24734986261888,
+        "min": 12.641615867614746,
+        "max": 55.576019287109375
+      },
+      "Load/CPU Max": {
+        "avg": 61.27128750194203,
+        "min": 33.327999114990234,
+        "max": 99.08248138427734
+      },
+      "Data/GPU Memory Dedicated Game": {
+        "avg": 1.8624285958030007,
+        "min": 1.5656356811523438,
+        "max": 1.9405517578125
+      },
+      "Temperature/GPU Core": {
+        "avg": 56.29545454545455,
+        "min": 52.0,
+        "max": 59.0
+      },
+      "Clock/GPU Core": {
+        "avg": 2831.965909090909,
+        "min": 2820.0,
+        "max": 2835.0
+      },
+      "Load/GPU Core": {
+        "avg": 98.18863636363636,
+        "min": 85.0,
+        "max": 100.0
+      },
+      "Data/GPU Memory Allocated": {
+        "avg": 2.067584029110995,
+        "min": 1.788787841796875,
+        "max": 2.13330078125
+      },
+      "Data/GPU Memory Dedicated": {
+        "avg": 3.0099053903059527,
+        "min": 2.8426132202148438,
+        "max": 3.0545082092285156
+      },
+      "Power/GPU Power": {
+        "avg": 91.14556139165705,
+        "min": 78.83300018310547,
+        "max": 100.7760009765625
+      },
+      "Data/RAM Game Used": {
+        "avg": 3.3653034383600406,
+        "min": 3.3118934631347656,
+        "max": 3.547931671142578
+      }
+    },
+    "notes": []
+  },
+  {
+    "label": "Sajat run 2",
+    "source": "CapFrameX-cs2.exe-2026-10-03T23759.json",
+    "info": {
+      "AppVersion": "1.9.1.5",
+      "Id": "dd0cc2c2-ef4d-4c87-86d1-0ad3df06fc3f",
+      "Processor": "AMD Ryzen 7 7800X3D",
+      "GameName": "Counter Strike 2",
+      "ProcessName": "cs2.exe",
+      "CreationDate": "2026-10-03T01:37:59.7932086Z",
+      "Motherboard": "Gigabyte B650 AORUS ELITE AX V2",
+      "OS": "Microsoft Windows 11 Pro Build 26200",
+      "SystemRam": "32GB (2x16GB) 6000MT/s",
+      "BaseDriverVersion": null,
+      "GPUDriverVersion": "617.14",
+      "DriverPackage": null,
+      "GPU": "NVIDIA GeForce RTX 4060",
+      "GPUCount": null,
+      "GpuCoreClock": null,
+      "GpuMemoryClock": null,
+      "Comment": "Sajat run 2",
+      "ApiInfo": "unknown",
+      "ResizableBar": "Enabled",
+      "WinGameMode": "Enabled",
+      "HAGS": "Enabled",
+      "PresentationMode": "Fullscreen Optimized or Borderless",
+      "DisplayLayer": "Layer 1",
+      "ResolutionInfo": ""
+    },
+    "metrics": {
+      "avg_fps": 511.2407556452227,
+      "low1_fps": 219.7400027003261,
+      "low01_fps": 171.98559786568893,
+      "p1_fps": 254.79005299633104,
+      "p01_fps": 189.30430667297682,
+      "animation_error_avg_ms": 0.28881938432277265,
+      "stutter_time_pct": 0.6218278671652048,
+      "gpu_latency_avg_ms": null,
+      "gpu_busy_avg_ms": 1.9367316556011482,
+      "gpu_wait_avg_ms": null,
+      "avg_frametime_ms": 1.9560255886444888,
+      "duration_secs": 111.069001,
+      "frame_count": 56783,
+      "pc_latency_avg_ms": 3.240948681823785,
+      "pc_latency_p99_ms": 6.4145,
+      "input_detected": false,
+      "frametime_min_ms": 0.3426,
+      "frametime_p99_ms": 3.9248,
+      "frametime_max_ms": 7.1901,
+      "pcl_avg_ms": 6.400446536815597,
+      "pcl_p99_ms": 11.6871,
+      "cpu_busy_avg_ms": 0.5879452036701126,
+      "in_present_avg_ms": 1.3680815895602556,
+      "stutter_reference_ms": 1.9997239828026803,
+      "stutter_threshold_ms": 4.999309957006701
+    },
+    "sensors": {
+      "Load/CPU Total": {
+        "avg": 22.721735169534725,
+        "min": 9.858907699584961,
+        "max": 52.15721130371094
+      },
+      "Load/CPU Max": {
+        "avg": 53.96498495794732,
+        "min": 26.958280563354492,
+        "max": 85.92868041992188
+      },
+      "Data/GPU Memory Dedicated Game": {
+        "avg": 1.8377213499471212,
+        "min": 1.3196678161621094,
+        "max": 1.9642524719238281
+      },
+      "Temperature/GPU Core": {
+        "avg": 57.5,
+        "min": 51.0,
+        "max": 60.0
+      },
+      "Clock/GPU Core": {
+        "avg": 2822.656950672646,
+        "min": 2820.0,
+        "max": 2835.0
+      },
+      "Load/GPU Core": {
+        "avg": 98.07847533632287,
+        "min": 60.0,
+        "max": 100.0
+      },
+      "Data/GPU Memory Allocated": {
+        "avg": 2.0333506408828255,
+        "min": 1.5124053955078125,
+        "max": 2.1604080200195312
+      },
+      "Data/GPU Memory Dedicated": {
+        "avg": 3.0851280315039937,
+        "min": 2.9959754943847656,
+        "max": 3.11456298828125
+      },
+      "Power/GPU Power": {
+        "avg": 91.48104263100389,
+        "min": 80.4229965209961,
+        "max": 101.41200256347656
+      },
+      "Data/RAM Game Used": {
+        "avg": 3.560818616584812,
+        "min": 3.45648193359375,
+        "max": 3.781818389892578
+      }
+    },
+    "notes": []
+  },
+  {
+    "label": "Sajat run 3",
+    "source": "CapFrameX-cs2.exe-2026-10-03T2408.json",
+    "info": {
+      "AppVersion": "1.9.1.5",
+      "Id": "1ab887e4-90ce-4093-bb45-bbe2a5546122",
+      "Processor": "AMD Ryzen 7 7800X3D",
+      "GameName": "Counter Strike 2",
+      "ProcessName": "cs2.exe",
+      "CreationDate": "2026-10-03T01:40:08.8060928Z",
+      "Motherboard": "Gigabyte B650 AORUS ELITE AX V2",
+      "OS": "Microsoft Windows 11 Pro Build 26200",
+      "SystemRam": "32GB (2x16GB) 6000MT/s",
+      "BaseDriverVersion": null,
+      "GPUDriverVersion": "617.14",
+      "DriverPackage": null,
+      "GPU": "NVIDIA GeForce RTX 4060",
+      "GPUCount": null,
+      "GpuCoreClock": null,
+      "GpuMemoryClock": null,
+      "Comment": "Sajat run 3",
+      "ApiInfo": "unknown",
+      "ResizableBar": "Enabled",
+      "WinGameMode": "Enabled",
+      "HAGS": "Enabled",
+      "PresentationMode": "Fullscreen Optimized or Borderless",
+      "DisplayLayer": "Layer 1",
+      "ResolutionInfo": ""
+    },
+    "metrics": {
+      "avg_fps": 512.9300708070487,
+      "low1_fps": 214.83630206179376,
+      "low01_fps": 167.06074760836697,
+      "p1_fps": 249.71906605069296,
+      "p01_fps": 189.6453631708705,
+      "animation_error_avg_ms": 0.3012730399453619,
+      "stutter_time_pct": 0.5880422629981762,
+      "gpu_latency_avg_ms": null,
+      "gpu_busy_avg_ms": 1.9299271964695375,
+      "gpu_wait_avg_ms": null,
+      "avg_frametime_ms": 1.9495834947375796,
+      "duration_secs": 111.32706630000001,
+      "frame_count": 57103,
+      "pc_latency_avg_ms": 3.209216098979038,
+      "pc_latency_p99_ms": 6.3456,
+      "input_detected": false,
+      "frametime_min_ms": 0.421,
+      "frametime_p99_ms": 4.0045,
+      "frametime_max_ms": 7.7046,
+      "pcl_avg_ms": 6.358846270773864,
+      "pcl_p99_ms": 11.3206,
+      "cpu_busy_avg_ms": 0.6059694061607972,
+      "in_present_avg_ms": 1.3436230618356302,
+      "stutter_reference_ms": 1.9997239828026803,
+      "stutter_threshold_ms": 4.999309957006701
+    },
+    "sensors": {
+      "Load/CPU Total": {
+        "avg": 24.989016902820946,
+        "min": 11.717034339904785,
+        "max": 52.77745819091797
+      },
+      "Load/CPU Max": {
+        "avg": 58.54865859335313,
+        "min": 37.07740020751953,
+        "max": 100.0
+      },
+      "Data/GPU Memory Dedicated Game": {
+        "avg": 1.8523601395132296,
+        "min": 1.7578163146972656,
+        "max": 1.8896217346191406
+      },
+      "Temperature/GPU Core": {
+        "avg": 58.2780269058296,
+        "min": 52.0,
+        "max": 60.0
+      },
+      "Clock/GPU Core": {
+        "avg": 2835.0,
+        "min": 2835.0,
+        "max": 2835.0
+      },
+      "Load/GPU Core": {
+        "avg": 98.0201793721973,
+        "min": 58.0,
+        "max": 100.0
+      },
+      "Data/GPU Memory Allocated": {
+        "avg": 2.0476497598827685,
+        "min": 1.9505538940429688,
+        "max": 2.089038848876953
+      },
+      "Data/GPU Memory Dedicated": {
+        "avg": 3.0064099829293154,
+        "min": 2.9077911376953125,
+        "max": 3.0395889282226562
+      },
+      "Power/GPU Power": {
+        "avg": 91.7028497772901,
+        "min": 78.88400268554688,
+        "max": 101.11100006103516
+      },
+      "Data/RAM Game Used": {
+        "avg": 3.6451315772907615,
+        "min": 3.5581893920898438,
+        "max": 3.7620391845703125
+      }
+    },
+    "notes": []
+  }
+]
